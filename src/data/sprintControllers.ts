@@ -18,14 +18,14 @@ export const getSprintsController = async () => {
 
 export const updateSprintController = async (sprintActualizado: ISprint) => {
   try {
-    // Obtenemos la lista de proyectos actuales
+    // Obtenemos la lista de sprints actuales
     const sprintsBd = await getSprintsController();
 
     if (sprintsBd) {
-      // Mapeamos los proyectos y reemplazamos el que coincida con el ID del actualizado
+      // Mapeamos los sprints y reemplazamos el que coincida con el ID del actualizado
       const result = sprintsBd.map((sprint) =>
         sprint.id === sprintActualizado.id
-          ? { ...sprint, ...sprintActualizado } // Actualizamos los datos del proyecto
+          ? { ...sprint, ...sprintActualizado } // Actualizamos los datos del sprint
           : sprint
       );
 

@@ -105,14 +105,14 @@ export const updateTareaSprintController = async (tareaActualizada: ITarea, idSp
       // Mapeamos los proyectos y reemplazamos el que coincida con el ID del actualizado
       const result = tareasBd.map((tarea) =>
         tarea.id === tareaActualizada.id
-          ? { ...tarea, ...tareaActualizada } // Actualizamos los datos del proyecto
+          ? { ...tarea, ...tareaActualizada } // Actualizamos los datos de la tarea
           : tarea
       );
       const sprintsBdActulizado = sprintsBd.map((sprint)=> sprint.id === idSprint ? {...sprint, tareas: result}: sprint)
 
-      await putSprintList(sprintsBdActulizado); // Guardamos la nueva lista de proyectos
+      await putSprintList(sprintsBdActulizado); // Guardamos la nueva lista de sprints
     }
-    return tareaActualizada; // Retornamos el proyecto actualizado
+    return tareaActualizada; // Retornamos la ta actualizado
   } catch (error) {
     console.log("Error en updateProyectoController", error);
   }
@@ -125,16 +125,44 @@ export const deleteTareaSprintController = async (idTarea: string, idSprint:stri
     const tareasBd = await getTareasSprintController(idSprint);
     const sprintsBd = await getSprintsController()
     if (tareasBd) {
-      // Filtramos la lista eliminando el proyecto con el ID dado
+      // Filtramos la lista eliminando la tarea con el ID dado
       const result = tareasBd.filter(
         (tarea) => tarea.id !== idTarea
       );
       const sprintsBdActulizado = sprintsBd.filter((sprint)=> sprint.id === idSprint ? {...sprint, tareas: result}: sprint)
 
-      await putSprintList(sprintsBdActulizado); // Guardamos la nueva lista sin el proyecto eliminado
+      await putSprintList(sprintsBdActulizado); 
     }
   } catch (error) {
     console.log("Error en deleteProyectoController", error);
   }
 };
+//No ha sido probado aun
+export const moverTareaASprintController = async (tarea : ITarea, idSprint: string) => {
+  try {
+    await createTareaController(tarea)
+    await deleteTareaSprintController(tarea.id, idSprint)
+  } catch(err) {
+    throw new Error("Ocurrio un error en la funcion de mover la tarea de un sprint al backlog")
+  }
+}
+
+export const moverTareaABacklogController = async (tarea : ITarea, idSprint: string) => {
+  try {
+    const tareasBd = await getTareasSprintController(idSprint);
+    const sprintsBd = await getSprintsController()
+    let tareasBdActulizada: ITarea[] = []
+    if (tareasBd) {
+      tareasBdActulizada = [...tareasBd,  tarea]
+    } else {
+      tareasBdActulizada = [tarea]
+    }
+    const sprintsBdActulizado = sprintsBd.map((sprint)=> sprint.id === idSprint ? {...sprint, tareas: tareasBdActulizada}: sprint)
+    await putSprintList(sprintsBdActulizado)
+    await deleteTareaController(tarea.id)
+  } catch(err) {
+    throw new Error("Ocurrio un error en la funcion de mover la tarea de un backlog al sprint")
+  }
+}
+
 
