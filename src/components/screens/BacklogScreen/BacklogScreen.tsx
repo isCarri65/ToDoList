@@ -1,5 +1,9 @@
 import { getTareasController, getTareasSprintController, updateTareaSprintController } from "../../../data/tareaController"
-import { ITarea } from "../../../types/ITarea"
+import { ITask } from "../../../types/ITask"
+import { Header } from "../../ui/Header/Header"
+import { ListTasks } from "../../ui/Backlog/ListTasks/ListTasks"
+import { SprintList } from "../../ui/Backlog/SprintListBackLog/SprintList"
+import styles from "./BacklogScreen.module.css"
 
 export const BacklogScreen = () => {
   const obtenerTareas = async ()=>{
@@ -11,7 +15,7 @@ export const BacklogScreen = () => {
     console.log(tareasSprint)
   }
    
-  const tareaEditada: ITarea = {
+  const tareaEditada: ITask = {
     id: "50699dec-3d1a-45ff-a94d-82d416eac053",
     titulo: "Tarea 200",
     descripcion: "Editando tarea del sprint",
@@ -23,10 +27,16 @@ export const BacklogScreen = () => {
   }
   return (
     <>
-     <div>BacklogScreen</div>
+     {/* <div>BacklogScreen</div>
      <button onClick={obtenerTareas}>obtener tareas</button>
      <button onClick={actulizarTareaSprint}>actualizar tarea del sprint</button>
-     <button onClick={obtenerTareasDeSprint}>Obtener Tareas de un sprint</button>
+     <button onClick={obtenerTareasDeSprint}>Obtener Tareas de un sprint</button> */}
+    <Header></Header>
+    <div className={styles.containerPrincipalListTareas}>
+    <h1 className={styles.titleBackLog}>BackLog</h1>
+    <SprintList/>
+    <ListTasks/>
+    </div>
     </>
    
   )

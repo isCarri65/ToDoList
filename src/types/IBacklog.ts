@@ -1,5 +1,5 @@
-import { ITarea } from "./ITarea";
+import { ITask } from "./ITask";
 
 export interface IBacklog {
-  tareas: ITarea[]
+  tareas: ITask[]
 }

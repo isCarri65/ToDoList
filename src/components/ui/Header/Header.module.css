@@ -1,0 +1,10 @@
+.containerHeader{
+    width: 100vw;
+    height: 10vh;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-letter-primary);
+    font-size: 1.4em;
+}

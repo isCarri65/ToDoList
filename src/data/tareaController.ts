@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL } from "../utils/constantes";
 import { IBacklog } from "../types/IBacklog";
-import { ITarea } from "../types/ITarea";
+import { ITask } from "../types/ITask";
 import { putBacklog } from "../http/backlog";
 import { getSprintsController } from "./sprintControllers";
 import { putSprintList } from "../http/sprintList";
@@ -16,8 +16,7 @@ export const getTareasController = async () => {
   }
   
 }
-
-export const createTareaController = async (tareaNueva: ITarea) => {
+export const createTareaController = async (tareaNueva: ITask) => {
   try {
     // Obtenemos la lista de proyectos actuales
     const tareasBd = await getTareasController();
@@ -37,7 +36,7 @@ export const createTareaController = async (tareaNueva: ITarea) => {
 };
 
 
-export const updateTareaController = async (tareaActualizada: ITarea) => {
+export const updateTareaController = async (tareaActualizada: ITask) => {
   try {
     // Obtenemos la lista de proyectos actuales
     const tareasBd = await getTareasController();
@@ -95,7 +94,7 @@ export const getTareasSprintController = async (idSprint:String) => {
   
 }
 
-export const updateTareaSprintController = async (tareaActualizada: ITarea, idSprint:String) => {
+export const updateTareaSprintController = async (tareaActualizada: ITask, idSprint:String) => {
   try {
     // Obtenemos la lista de proyectos actuales
     const tareasBd = await getTareasSprintController(idSprint);
@@ -138,7 +137,7 @@ export const deleteTareaSprintController = async (idTarea: string, idSprint:stri
   }
 };
 //No ha sido probado aun
-export const moverTareaASprintController = async (tarea : ITarea, idSprint: string) => {
+export const moverTareaASprintController = async (tarea : ITask, idSprint: string) => {
   try {
     await createTareaController(tarea)
     await deleteTareaSprintController(tarea.id, idSprint)
@@ -147,11 +146,11 @@ export const moverTareaASprintController = async (tarea : ITarea, idSprint: stri
   }
 }
 
-export const moverTareaABacklogController = async (tarea : ITarea, idSprint: string) => {
+export const moverTareaABacklogController = async (tarea : ITask, idSprint: string) => {
   try {
     const tareasBd = await getTareasSprintController(idSprint);
     const sprintsBd = await getSprintsController()
-    let tareasBdActulizada: ITarea[] = []
+    let tareasBdActulizada: ITask[] = []
     if (tareasBd) {
       tareasBdActulizada = [...tareasBd,  tarea]
     } else {
