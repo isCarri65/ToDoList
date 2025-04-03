@@ -1,6 +1,6 @@
 
-export interface ITarea {
-  id: string,
+export interface ITask {
+  id?: string,
   titulo: string,
   descripcion: string,
   estado: string,

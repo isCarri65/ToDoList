@@ -1,9 +1,9 @@
 import axios from "axios"
 import { API_URL } from "../utils/constantes"
 import { IBacklog } from "../types/IBacklog"
-import { ITarea } from "../types/ITarea"
+import { ITask } from "../types/ITarea"
 
-export const putBacklog = async(tareas: ITarea[])=>{
+export const putBacklog = async(tareas: ITask[])=>{
   try{
     
     const response = await axios.put<IBacklog>(`${API_URL}/backlog`, {tareas: tareas})
