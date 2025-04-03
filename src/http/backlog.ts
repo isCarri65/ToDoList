@@ -1,7 +1,7 @@
 import axios from "axios"
 import { API_URL } from "../utils/constantes"
 import { IBacklog } from "../types/IBacklog"
-import { ITask } from "../types/ITarea"
+import { ITask } from "../types/ITask"
 
 export const putBacklog = async(tareas: ITask[])=>{
   try{

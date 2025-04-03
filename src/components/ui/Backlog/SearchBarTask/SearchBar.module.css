@@ -2,6 +2,11 @@
 
     background: var(--primary-color);
     border-radius: 40px;
+    border: 1px white solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px;
  }
   
   .searchbox:hover .inputsearch {
@@ -41,7 +46,15 @@
     transition: 0.4s;
     line-height: 40px;
     width: 0px;
+    color: #fff
+    
   }
+  .inputsearch::placeholder {
+    color: #ccc; /* Cambia el color del texto del placeholder */
+    font-style: italic; /* Opcional: ponerlo en cursiva */
+    opacity: 1; /* Asegura que sea completamente visible */
+  }
+  
   
   @media screen and (max-width: 620px) {
     .searchbox:hover .inputsearch {

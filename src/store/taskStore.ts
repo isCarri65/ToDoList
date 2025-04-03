@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { ITask } from "../types/ITarea";
+import { ITask } from "../types/ITask";
 
 
 export interface ITaskStore {

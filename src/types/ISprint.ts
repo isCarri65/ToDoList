@@ -1,4 +1,4 @@
-import { ITask } from "./ITarea";
+import { ITask } from "./ITask";
 
 export interface ISprint {
     id?: string,

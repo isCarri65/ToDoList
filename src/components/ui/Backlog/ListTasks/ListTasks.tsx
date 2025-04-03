@@ -8,6 +8,7 @@ import { ModalTask } from "../ModalsBacklog/ModalTask"
 import { SearchBarTask } from "../SearchBarTask/SearchBarTask"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThList } from "@fortawesome/free-solid-svg-icons"
+import { ITask } from "../../../../types/ITask"
 
 
 export const  ListTasks = () => {
@@ -22,7 +23,7 @@ export const  ListTasks = () => {
 
     const [openModalTarea, setOpenModalTarea] = useState(false);
 
-    const handleOpenModal = (tarea:ITarea) => {
+    const handleOpenModal = (tarea:ITask) => {
         setTareaActiva(tarea)
         setOpenModalTarea(true)
     }

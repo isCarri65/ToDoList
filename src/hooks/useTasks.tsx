@@ -1,7 +1,7 @@
 import { useShallow } from "zustand/shallow"
 import { taskStore } from "../store/taskStore"
 import { updateTareaController, deleteTareaController, getTareasController, createTareaController, searchByName } from "../data/tareaController"
-import { ITask } from "../types/ITarea"
+import { ITask } from "../types/ITask"
 import Swal from "sweetalert2"
 
 

@@ -26,7 +26,7 @@ export const CardSprint: FC<ICardList> = ({sprint, handleOpenModal}) => {
     return (
         <div className={styles.containerCard}>
             <div className={styles.containerDescription}>
-                <h3>Título: {sprint.nombre}</h3>
+                <h3>{sprint.nombre}</h3>
                 <p>
                     <b>Fecha inicio: {sprint.fechaInicio}</b>
                 </p>

@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import { taskStore } from "../../../../store/taskStore";
 import styles from "./ModalTask.module.css";
-import { ITask } from "../../../../types/ITarea";
+import { ITask } from "../../../../types/ITask";
 import { useTask } from "../../../../hooks/useTasks";
 import { v4 as uuidv4 } from 'uuid';
 
