@@ -24,7 +24,7 @@ export const useSprint = () => {
         agregarNuevasprint(newSprint)
         try {
             await createSprintController(newSprint);
-            Swal.fire("Éxito", "Sprint creada correctamente", "success")
+            Swal.fire("Éxito", "Sprint creado correctamente", "success")
         }catch (error){
             eliminarUnasprint(newSprint.id!);
             console.log("Algo salió mal al crear la sprint")
@@ -38,7 +38,7 @@ export const useSprint = () => {
         editarUnasprint(sprintEditada)
         try {
             await updateSprintController(sprintEditada);
-            Swal.fire("Éxito", "Sprint actualizada correctamente", "success")
+            Swal.fire("Éxito", "Sprint actualizado correctamente", "success")
         }catch (error) {
             if (estadoPrevio) editarUnasprint(estadoPrevio);
             console.log("Algo salió mal al editar")
@@ -54,7 +54,8 @@ export const useSprint = () => {
             text: "Esta acción no se puede deshacer",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonText: "Sí, eliminar",
+            confirmButtonText: "Eliminar",
+            confirmButtonColor: "red",
             cancelButtonText: "Cancelar"
         });
 
@@ -62,7 +63,7 @@ export const useSprint = () => {
         eliminarUnasprint(idSprint)
         try {
             await deleteSprintController(idSprint);
-            Swal.fire("Eliminado", "La sprint se eliminó correctamente", "success")
+            Swal.fire("Eliminado", "El sprint se eliminó correctamente", "success")
         } catch (error) {
             if (estadoPrevio) agregarNuevasprint(estadoPrevio)
             console.log("Algo salió mal al editar")

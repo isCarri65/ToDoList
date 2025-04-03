@@ -38,14 +38,16 @@ export const  ListTasks = () => {
             <SearchBarTask/>
             <button className={styles.addTask} onClick={() => {setOpenModalTarea(true)}}><FontAwesomeIcon icon={faThList}/> Agregar tarea</button>
             </div>
+            <div className={styles.tasksContainer}>
 
             {
-                    tareas.length > 0 ? tareas.map(
-                        (el, index) => <CardTask key={index} handleOpenModal={handleOpenModal} tarea = {el}></CardTask>) : 
-                        <div>
+                tareas.length > 0 ? tareas.map(
+                    (el, index) => <CardTask key={index} handleOpenModal={handleOpenModal} tarea = {el}></CardTask>) : 
+                    <div>
                             <h3>No hay tareas</h3>
                         </div>
                 }
+                </div>
             {openModalTarea && <ModalTask handleCloseModal={handleCloseModal}></ModalTask>}
 
         </div>
