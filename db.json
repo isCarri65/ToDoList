@@ -1,0 +1,64 @@
+{
+  "backlog": {
+    "tareas": [
+      {
+        "id": "dcec0ad4-31e0-4279-8ccf-72bd1f20b52d",
+        "titulo": "Tarea backlog",
+        "descripcion": "Descripcion tarea backlog",
+        "estado": "pendiente",
+        "fechaLimite": "2025-03-05"
+      },
+      {
+        "titulo": "qwe",
+        "descripcion": "qwe",
+        "estado": "",
+        "fechaLimite": "2025-04-23",
+        "id": "ec993c92-9eef-4590-b640-8337b0bb63fe"
+      }
+    ]
+  },
+  "sprintList": {
+    "sprints": [
+      {
+        "id": "b0e3f34b-68c6-49eb-b059-ab251ed81629",
+        "fechaInicio": "2025-03-04",
+        "fechaCierre": "2025-03-11",
+        "nombre": "qweqwe",
+        "tareas": [
+          {
+            "id": "50699dec-3d1a-45ff-a94d-82d416eac053",
+            "titulo": "Tarea 200",
+            "descripcion": "Editando tarea del sprint",
+            "estado": "pendiente",
+            "fechaLimite": "2025-03-06"
+          }
+        ]
+      },
+      {
+        "fechaInicio": "2025-04-17",
+        "fechaCierre": "2025-04-09",
+        "nombre": "qwe",
+        "fechaIncio": "2025-04-11",
+        "id": "Thu Apr 03 2025"
+      },
+      {
+        "fechaInicio": "2025-04-17",
+        "fechaCierre": "2025-04-11",
+        "nombre": "sprint 123",
+        "id": "Thu Apr 03 2025"
+      },
+      {
+        "fechaInicio": "2025-04-11",
+        "fechaCierre": "2025-04-18",
+        "nombre": "qwe",
+        "id": "c74393f2-267f-459f-b54b-ef1345ac8227"
+      },
+      {
+        "fechaInicio": "2025-04-26",
+        "fechaCierre": "2025-05-01",
+        "nombre": "asd",
+        "id": "9557ac84-627d-4cb8-b485-a7564bc3a9c7"
+      }
+    ]
+  }
+}

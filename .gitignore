@@ -24,5 +24,3 @@ dist-ssr
 *.sln
 *.sw?
 
-# Ignorar archivo db.json de json-server
-db.json
