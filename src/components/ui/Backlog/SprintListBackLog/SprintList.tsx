@@ -38,13 +38,17 @@ export const SprintList = () => {
             <button className={styles.addSprint} onClick={() => {setOpenModalTarea(true)}}><FontAwesomeIcon icon={faThList}/> Agregar Sprint</button>
 
 
-            {
-                    sprints.length > 0 ? sprints.map(
-                        (el, index) => <CardSprint key={index} handleOpenModal={handleOpenModal} sprint = {el}></CardSprint>) : 
-                        <div>
-                            <h3>No hay sprints</h3>
-                        </div>
-                }
+            <div className={styles.sprintsContainer}>
+        {sprints.length > 0 ? (
+            sprints.map((el, index) => (
+                <CardSprint key={index} handleOpenModal={handleOpenModal} sprint={el} />
+            ))
+        ) : (
+            <div>
+                <h3>No hay sprints</h3>
+            </div>
+        )}
+    </div>
             {openModalTarea && <ModalSprint handleCloseModal={handleCloseModal}></ModalSprint>}
 
         </div>

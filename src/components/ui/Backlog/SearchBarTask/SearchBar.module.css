@@ -7,6 +7,7 @@
     align-items: center;
     justify-content: center;
     padding: 3px;
+    margin-right: 20px;
  }
   
   .searchbox:hover .inputsearch {
