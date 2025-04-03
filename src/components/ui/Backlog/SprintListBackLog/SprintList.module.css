@@ -8,7 +8,7 @@
     flex-direction: column;
     gap: 10px;
     margin: .5em;
-
+    align-items: center;
 }
 .titleSprint{
     display: flex;
@@ -16,10 +16,15 @@
     margin-bottom: 10px;
 }
 
-.card {
-    background: #007bff;
-    color: white;
+.addSprint{
+    font-size: 120%;    
+    border-radius: 40px ;
+    background-color: transparent;
+    color: var(--color-letter-primary);
+    border: 1px white solid;
+    box-shadow: 1px 1px 5px white;
     padding: 10px;
-    border-radius: 5px;
-    text-align: center;
+}
+.addSprint:hover{
+    background-color: var(--hover-addTask);
 }

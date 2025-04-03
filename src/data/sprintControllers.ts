@@ -36,3 +36,36 @@ export const updateSprintController = async (sprintActualizado: ISprint) => {
     console.log("Error en updateProyectoController", error);
   }
 };
+export const createSprintController = async (newSprint: ISprint) => {
+  try {
+    // Obtenemos la lista de proyectos actuales
+    const sprintBd = await getSprintsController();
+
+    if (sprintBd) {
+      // Si existen tareas, agregamos el nuevo a la lista y actualizamos
+      await putSprintList([...sprintBd,  newSprint]);
+    } else {
+      // Si no existen tareas, creamos la lista con la nueva tarea
+      await putSprintList([newSprint]);
+    }
+
+    return newSprint; 
+  } catch (error) {
+    console.log("Error en createProyectoController", error);
+  }
+};
+
+export const deleteSprintController = async (idSprint: string) => {
+  try {
+    const sprintBd = await getSprintsController();
+
+    if (sprintBd) {
+      const result = sprintBd.filter(
+        (sprint) => sprint.id !== idSprint
+      );
+
+    }
+  } catch (error) {
+    console.log("Error en deleteProyectoController", error);
+  }
+};

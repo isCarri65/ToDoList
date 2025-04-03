@@ -35,8 +35,8 @@ export const CardTask: FC<ICardList> = ({tarea, handleOpenModal}) => {
 
             <div className={styles.actionCard}>
                 <button className={styles.buttonCardTaskDelete} onClick={eliminarTareaById}><FontAwesomeIcon icon={faTrashAlt} color="red" /></button>
-                <button className={styles.buttonCardTaskEdit} onClick={editarTarea}><FontAwesomeIcon icon={faPencilSquare} color="red" /></button>
-                <button className={styles.buttonCardTaskSee} ><FontAwesomeIcon icon={faEye} color="red" /></button>
+                <button className={styles.buttonCardTaskEdit} onClick={editarTarea}><FontAwesomeIcon icon={faPencilSquare} color="#5195EF" /></button>
+                <button className={styles.buttonCardTaskSee} ><FontAwesomeIcon icon={faEye} color="#5195EF" /></button>
             </div>
         </div>
     )
