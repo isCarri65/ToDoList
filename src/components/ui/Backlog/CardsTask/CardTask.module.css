@@ -1,48 +1,49 @@
 .containerCard {
-    width: 100%;
-    background-color: var(--card-color);
-    border-radius: 0.4rem;
-    padding: 0.4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--card-letter-color);
-    
+  width: 100%;
+  background-color: var(--card-color);
+  border-radius: 0.4rem;
+  padding: 0.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--card-letter-color);
 }
-.containerDescription{
-    
+.containerDescription {
 }
 .actionCard {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: .3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.3rem;
 }
 
-.buttonCardTaskDelete{
-border: none;
-    background-color: transparent;
-    color: var(--card-letter-color);
-    font-size: 30px;
+.buttonCardTaskDelete {
+  border: none;
+  background-color: transparent;
+  color: var(--card-letter-color);
+  font-size: 30px;
 }
 
-
-.buttonCardTaskEdit{
-border: none;
-    background-color: transparent;
-    color: var(--card-letter-color);
-    font-size: 30px;
-
+.buttonCardTaskEdit {
+  border: none;
+  background-color: transparent;
+  color: var(--card-letter-color);
+  font-size: 30px;
 }
 
-.buttonCardTaskSee{
-border: none;
-    background-color: transparent;
-    color: var(--card-letter-color);
-    font-size: 25px;
-
+.buttonCardTaskSee {
+  border: none;
+  background-color: transparent;
+  color: var(--card-letter-color);
+  font-size: 25px;
 }
 
-
-
-
+.selectSprintInput {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+.opcionInput {
+  height: 18px;
+}

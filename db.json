@@ -1,0 +1,39 @@
+{
+  "backlog": {
+    "tareas": [
+      {
+        "id": "dcec0ad4-31e0-4279-8ccf-72bd1f20b52d",
+        "titulo": "Tarea backlog",
+        "descripcion": "Descripción tarea backlog",
+        "estado": "pendiente",
+        "fechaLimite": "2025-03-05"
+      },
+      {
+        "titulo": "Agregar funcionalidad de mover tarea a un sprint",
+        "descripcion": "Crear una lista de opciones deplegable en cada tarea para elegir el sprint al cual agregarlo",
+        "estado": "",
+        "fechaLimite": "2025-04-03",
+        "id": "20e26838-9aa2-477a-bc10-a6090413362a"
+      }
+    ]
+  },
+  "sprintList": {
+    "sprints": [
+      {
+        "id": "b0e3f34b-68c6-49eb-b059-ab251ed81629",
+        "fechaInicio": "2025-03-04",
+        "fechaCierre": "2025-03-11",
+        "nombre": "Sprint 122",
+        "tareas": [
+          {
+            "id": "50699dec-3d1a-45ff-a94d-82d416eac053",
+            "titulo": "Tarea 200",
+            "descripcion": "Editando tarea del sprint",
+            "estado": "pendiente",
+            "fechaLimite": "2025-03-06"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,7 +1,6 @@
 import { ITask } from "./ITask";
 
-export interface ISprint {
-  id: string;
+export interface ICreateSprint {
   fechaInicio: string;
   fechaCierre: string;
   nombre: string;

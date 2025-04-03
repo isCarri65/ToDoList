@@ -1,5 +1,6 @@
 import { ITask } from "./ITask";
 
 export interface IBacklog {
-  tareas: ITask[]
+  id: string;
+  tareas: ITask[];
 }
