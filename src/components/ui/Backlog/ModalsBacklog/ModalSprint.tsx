@@ -3,6 +3,8 @@ import styles from "./ModalSprint.module.css";
 import { ISprint } from "../../../../types/ISprint";
 import { sprintStore } from "../../../../store/sprintBackLogStore";
 import { useSprint } from "../../../../hooks/useSprint";
+import { v4 as uuidv4 } from 'uuid';
+
 
 type IModal = {
     handleCloseModal: VoidFunction
@@ -16,16 +18,20 @@ const initialState:ISprint = {
 
 export const ModalSprint: FC<IModal> = ({handleCloseModal}) => {
 
-    const tareaActiva = sprintStore((state) => state.sprintActiva)
+    const sprintActiva = sprintStore((state) => state.sprintActiva)
 
-    const setTareaActiva = sprintStore((state) => state.setsprintActiva)
+    const setsprintActiva = sprintStore((state) => state.setsprintActiva)
 
     const {createSprint, editTask} = useSprint()
 
     const [formValues, setFormValues] = useState<ISprint>(initialState)
 
     useEffect(() => {
-        if(tareaActiva) setFormValues(tareaActiva);
+        if(sprintActiva){
+            setFormValues(sprintActiva)
+        } else {
+            setFormValues(prev => ({ ...prev, id: uuidv4() }));
+        };
     },[])
 
     const handleChange = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -36,14 +42,14 @@ export const ModalSprint: FC<IModal> = ({handleCloseModal}) => {
 
     const handleSubmit = (e:FormEvent) => {
         e.preventDefault();
-        if(tareaActiva) {
+        if(sprintActiva) {
             editTask(formValues)
         }
         else {
-            createSprint({...formValues,id: new Date().toDateString()})
+            createSprint({...formValues, id: formValues.id || uuidv4() })
         }
 
-        setTareaActiva(null)
+        setsprintActiva(null)
         handleCloseModal()
     }
 
@@ -51,7 +57,7 @@ export const ModalSprint: FC<IModal> = ({handleCloseModal}) => {
         <div className={styles.containerPrincipalModal}>
             <div className={styles.contentPopUp}>
                 <div className={styles.container}>
-                    <h3>{tareaActiva ? "Editar Sprint" : "Crear Sprint"}</h3>
+                    <h3>{sprintActiva ? "Editar Sprint" : "Crear Sprint"}</h3>
                 </div>
 
                 <form onSubmit={handleSubmit} className={styles.formContent}>
@@ -67,7 +73,7 @@ export const ModalSprint: FC<IModal> = ({handleCloseModal}) => {
                     <div className={styles.buttonCard}>
                         <button className={styles.buttonModalTask} onClick={handleCloseModal}>Cancelar</button>
 
-                        <button className={styles.buttonModalTask} type="submit">{tareaActiva ? "Editar sprint" : "Crear sprint"}</button>
+                        <button className={styles.buttonModalTask} type="submit">{sprintActiva ? "Editar sprint" : "Crear sprint"}</button>
                     </div>
                 </form>
             </div>

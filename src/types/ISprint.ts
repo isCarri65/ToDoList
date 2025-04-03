@@ -1,9 +1,9 @@
 import { ITask } from "./ITarea";
 
 export interface ISprint {
-    id?: "",
-    fechaInicio: "",
-    fechaCierre: "",
-    nombre: "",
+    id?: string,
+    fechaInicio: string,
+    fechaCierre: string,
+    nombre: string,
     tareas?: ITask[]
 }

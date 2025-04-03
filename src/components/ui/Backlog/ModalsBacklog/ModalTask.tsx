@@ -3,6 +3,7 @@ import { taskStore } from "../../../../store/taskStore";
 import styles from "./ModalTask.module.css";
 import { ITask } from "../../../../types/ITarea";
 import { useTask } from "../../../../hooks/useTasks";
+import { v4 as uuidv4 } from 'uuid';
 
 type IModal = {
     handleCloseModal: VoidFunction
@@ -26,25 +27,29 @@ export const ModalTask: FC<IModal> = ({handleCloseModal}) => {
     const [formValues, setFormValues] = useState<ITask>(initialState)
 
     useEffect(() => {
-        if(tareaActiva) setFormValues(tareaActiva);
+        if (tareaActiva) {
+            setFormValues(tareaActiva);
+        } else {
+            setFormValues(prev => ({ ...prev, id: uuidv4() }));
+        }
     },[])
 
     const handleChange = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const {name,value} = e.target
-
         setFormValues((prev) => ({...prev, [`${name}`]:value}))
     }
 
     const handleSubmit = (e:FormEvent) => {
         e.preventDefault();
-        if(tareaActiva) {
-            editTask(formValues)
-        }else {
-            createTask({...formValues,id: new Date().toDateString()})
-        }
 
-        setTareaActiva(null)
-        handleCloseModal()
+        if (tareaActiva) {
+            editTask(formValues);
+        } else {
+            createTask({ ...formValues, id: formValues.id || uuidv4() });
+        }
+    
+        setTareaActiva(null);
+        handleCloseModal();
     }
 
     return (
