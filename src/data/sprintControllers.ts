@@ -41,7 +41,7 @@ export const createSprintController = async (newSprint: ICreateSprint) => {
     const sprintBd = await getSprintsController();
     const newSprintAddedId: ISprint = {
       ...newSprint,
-      id: crypto.randomUUID.toString(),
+      id: crypto.randomUUID(),
     };
     if (sprintBd) {
       // Si existen tareas, agregamos el nuevo a la lista y actualizamos
@@ -63,6 +63,7 @@ export const deleteSprintController = async (idSprint: string) => {
 
     if (sprintBd) {
       const result = sprintBd.filter((sprint) => sprint.id !== idSprint);
+      putSprintList(result);
     }
   } catch (error) {
     console.log("Error en deleteProyectoController", error);

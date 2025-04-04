@@ -16,7 +16,7 @@ type ICardList = {
 };
 
 export const CardTask: FC<ICardList> = ({ tarea, handleOpenModal }) => {
-  const { deleteTask } = useTask();
+  const { deleteTask, moveTaskToSprint } = useTask();
   const { sprints } = useSprint();
 
   const eliminarTareaById = () => {
@@ -27,14 +27,11 @@ export const CardTask: FC<ICardList> = ({ tarea, handleOpenModal }) => {
     handleOpenModal(tarea);
   };
 
-  // Lista de opciones
-
-  // Estado para la opción seleccionada
-  const [seleccion, setSeleccion] = useState<string>("");
-
   // Manejar el cambio en el select
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSeleccion(event.target.value);
+    const id = event.target.value;
+    console.log(id);
+    moveTaskToSprint(tarea, id);
   };
 
   return (
@@ -48,6 +45,7 @@ export const CardTask: FC<ICardList> = ({ tarea, handleOpenModal }) => {
       </div>
 
       <div
+        className={styles.sprintSelectContainer}
         style={{
           display: "flex",
           flexDirection: "column",
@@ -61,26 +59,23 @@ export const CardTask: FC<ICardList> = ({ tarea, handleOpenModal }) => {
         ></label>
         <select
           id="miSelect"
-          value={seleccion}
           onChange={handleChange}
           className={styles.selectSprintInput}
+          value=""
         >
           <option className={styles.opcionInput} value="" disabled>
-            Enviar al Sprint
+            Designar sprint
           </option>
           {sprints.map((opcion, index) => (
             <option
               className={styles.opcionInput}
               key={index}
-              value={opcion.nombre}
+              value={opcion.id}
             >
               {opcion.nombre}
             </option>
           ))}
         </select>
-        {seleccion && (
-          <p style={{ marginTop: "10px" }}>Seleccionaste: {seleccion}</p>
-        )}
       </div>
 
       <div className={styles.actionCard}>
