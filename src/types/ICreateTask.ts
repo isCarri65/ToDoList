@@ -1,5 +1,4 @@
-export interface ITask {
-  id: string;
+export interface ICreateTask {
   titulo: string;
   descripcion: string;
   estado: string;

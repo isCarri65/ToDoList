@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { ITask } from "../../../../types/ITask";
 import styles from "./CardTask.module.css";
 import { useTask } from "../../../../hooks/useTasks";
@@ -8,6 +8,7 @@ import {
   faPencilSquare,
   faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import { useSprint } from "../../../../hooks/useSprint";
 
 type ICardList = {
   tarea: ITask;
@@ -15,7 +16,8 @@ type ICardList = {
 };
 
 export const CardTask: FC<ICardList> = ({ tarea, handleOpenModal }) => {
-  const { deleteTask } = useTask();
+  const { deleteTask, moveTaskToSprint } = useTask();
+  const { sprints } = useSprint();
 
   const eliminarTareaById = () => {
     deleteTask(tarea.id!);
@@ -23,6 +25,13 @@ export const CardTask: FC<ICardList> = ({ tarea, handleOpenModal }) => {
 
   const editarTarea = () => {
     handleOpenModal(tarea);
+  };
+
+  // Manejar el cambio en el select
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const id = event.target.value;
+    console.log(id);
+    moveTaskToSprint(tarea, id);
   };
 
   return (
@@ -34,7 +43,41 @@ export const CardTask: FC<ICardList> = ({ tarea, handleOpenModal }) => {
           <b>Fecha límite: {tarea.fechaLimite}</b>
         </p>
       </div>
-      <div></div>
+
+      <div
+        className={styles.sprintSelectContainer}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "200px",
+          margin: "20px auto",
+        }}
+      >
+        <label
+          htmlFor="miSelect"
+          style={{ marginBottom: "5px", fontWeight: "bold" }}
+        ></label>
+        <select
+          id="miSelect"
+          onChange={handleChange}
+          className={styles.selectSprintInput}
+          value=""
+        >
+          <option className={styles.opcionInput} value="" disabled>
+            Designar sprint
+          </option>
+          {sprints.map((opcion, index) => (
+            <option
+              className={styles.opcionInput}
+              key={index}
+              value={opcion.id}
+            >
+              {opcion.nombre}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className={styles.actionCard}>
         <button
           className={styles.buttonCardTaskDelete}

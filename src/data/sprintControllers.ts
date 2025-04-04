@@ -1,20 +1,19 @@
-import axios from "axios"
-import { ISprintList } from "../types/ISprintList"
-import { API_URL } from "../utils/constantes"
-import { ISprint } from "../types/ISprint"
-import { putSprintList } from "../http/sprintList"
-
+import axios from "axios";
+import { ISprintList } from "../types/ISprintList";
+import { API_URL } from "../utils/constantes";
+import { ISprint } from "../types/ISprint";
+import { putSprintList } from "../http/sprintList";
+import { ICreateSprint } from "../types/ICreateSprint";
 
 export const getSprintsController = async () => {
-  try{
-    const response = await axios.get<ISprintList>(`${API_URL}/sprintList`)
-    const responseParse = response.data.sprints
-    return responseParse
-  } catch(errror) {
-    throw new Error("Error al obtener tareas del Backlog")
+  try {
+    const response = await axios.get<ISprintList>(`${API_URL}/sprintList`);
+    const responseParse = response.data.sprints;
+    return responseParse;
+  } catch (errror) {
+    throw new Error("Error al obtener tareas del Backlog");
   }
-}
-
+};
 
 export const updateSprintController = async (sprintActualizado: ISprint) => {
   try {
@@ -36,20 +35,23 @@ export const updateSprintController = async (sprintActualizado: ISprint) => {
     console.log("Error en updateProyectoController", error);
   }
 };
-export const createSprintController = async (newSprint: ISprint) => {
+export const createSprintController = async (newSprint: ICreateSprint) => {
   try {
     // Obtenemos la lista de proyectos actuales
     const sprintBd = await getSprintsController();
-
+    const newSprintAddedId: ISprint = {
+      ...newSprint,
+      id: crypto.randomUUID(),
+    };
     if (sprintBd) {
       // Si existen tareas, agregamos el nuevo a la lista y actualizamos
-      await putSprintList([...sprintBd,  newSprint]);
+      await putSprintList([...sprintBd, newSprintAddedId]);
     } else {
       // Si no existen tareas, creamos la lista con la nueva tarea
-      await putSprintList([newSprint]);
+      await putSprintList([newSprintAddedId]);
     }
 
-    return newSprint; 
+    return newSprint;
   } catch (error) {
     console.log("Error en createProyectoController", error);
   }
@@ -60,10 +62,8 @@ export const deleteSprintController = async (idSprint: string) => {
     const sprintBd = await getSprintsController();
 
     if (sprintBd) {
-      const result = sprintBd.filter(
-        (sprint) => sprint.id !== idSprint
-      );
-
+      const result = sprintBd.filter((sprint) => sprint.id !== idSprint);
+      putSprintList(result);
     }
   } catch (error) {
     console.log("Error en deleteProyectoController", error);
