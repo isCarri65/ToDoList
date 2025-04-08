@@ -24,6 +24,7 @@
   background-color: transparent;
   color: var(--card-letter-color);
   font-size: 30px;
+  cursor: pointer;
 }
 
 .buttonCardTaskEdit {
@@ -31,6 +32,7 @@
   background-color: transparent;
   color: var(--card-letter-color);
   font-size: 30px;
+  cursor: pointer;
 }
 
 .selectSprintInput {
@@ -53,7 +55,24 @@
 .sprintSelectContainer {
   width: 20%;
   height: 100%;
-
+  position: relative;
   display: flex;
   justify-content: flex-end;
+}
+.arrowIcon {
+  position: absolute;
+  bottom: 0.55rem;
+  right: 1rem;
+  transition: rotate 0.2s ease-in;
+
+  pointer-events: none;
+}
+.arrowIcon2 {
+  position: absolute;
+  bottom: 0.55rem;
+  right: 1rem;
+  rotate: 90deg;
+  transition: rotate 0.2s ease-in;
+
+  pointer-events: none;
 }
