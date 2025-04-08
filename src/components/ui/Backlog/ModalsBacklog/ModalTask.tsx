@@ -76,7 +76,7 @@ export const ModalTask: FC<IModal> = ({ handleCloseModal }) => {
             />
 
             <textarea
-              className={styles.input}
+              className={styles.input + " " + styles.inputTextarea}
               placeholder="Ingrese una descripción"
               required
               onChange={handleChange}
@@ -85,7 +85,7 @@ export const ModalTask: FC<IModal> = ({ handleCloseModal }) => {
             ></textarea>
 
             <input
-              className={styles.input}
+              className={styles.input + " " + styles.inputDate}
               type="date"
               required
               onChange={handleChange}

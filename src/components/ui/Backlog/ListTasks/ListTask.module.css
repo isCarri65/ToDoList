@@ -1,59 +1,59 @@
 .tasks {
-    background: var(--primary-color);
-    color: var(--color-letter-primary);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin: .5em;
-
+  background: var(--primary-color);
+  color: var(--color-letter-primary);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 0.5em;
 }
-.containerSearchButton{
-    display: flex;
-    justify-content: space-around;
+.containerSearchButton {
+  display: flex;
+  justify-content: space-around;
 }
-.tittleTasks{
-    display: flex;
-    align-self: center;
-    margin-bottom: 10px;
+.tittleTasks {
+  display: flex;
+  align-self: center;
+  margin-bottom: 10px;
 }
-.addTask{
-    font-size: 120%;    
-    border-radius: 40px ;
-    background-color: transparent;
-    color: var(--color-letter-primary);
-    border: 1px white solid;
-    box-shadow: 1px 1px 5px white;
-    padding: 10px;
+.addTask {
+  font-size: 120%;
+  border-radius: 40px;
+  background-color: transparent;
+  color: var(--color-letter-primary);
+  border: 1px white solid;
+  box-shadow: 1px 1px 5px white;
+  padding: 10px;
+  cursor: pointer;
 }
-.addTask:hover{
-    background-color: var(--hover-addTask);
+.addTask:hover {
+  background-color: var(--hover-addTask);
 }
 
 .tasksContainer {
-    max-height: 50vh; /* Ajusta según necesidad */
-    width: 100%;
-    overflow-y: auto;
-    overflow-x:hidden;
-    margin-top: 10px;
-    border-radius: 8px;
-    background: #f8f8f8; /* Fondo opcional */
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  max-height: 50vh; /* Ajusta según necesidad */
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-top: 10px;
+  border-radius: 8px;
+  background: #f8f8f8; /* Fondo opcional */
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Opcional: Personalizar el scroll */
 .tasksContainer::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 .tasksContainer::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 10px;
+  background-color: #ccc;
+  border-radius: 10px;
 }
 
 .tasksContainer::-webkit-scrollbar-track {
-    background: transparent;
+  background: transparent;
 }

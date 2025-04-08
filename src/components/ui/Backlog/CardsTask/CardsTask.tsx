@@ -19,6 +19,8 @@ export const CardTask: FC<ICardList> = ({ tarea, handleOpenModal }) => {
   const { deleteTask, moveTaskToSprint } = useTask();
   const { sprints } = useSprint();
 
+  const [arrowDirection, setArrowDirection] = useState(false);
+
   const eliminarTareaById = () => {
     deleteTask(tarea.id!);
   };
@@ -32,6 +34,9 @@ export const CardTask: FC<ICardList> = ({ tarea, handleOpenModal }) => {
     const id = event.target.value;
     console.log(id);
     moveTaskToSprint(tarea, id);
+  };
+  const handleChangeArrow = () => {
+    setArrowDirection(!arrowDirection);
   };
 
   return (
@@ -60,10 +65,12 @@ export const CardTask: FC<ICardList> = ({ tarea, handleOpenModal }) => {
         <select
           id="miSelect"
           onChange={handleChange}
+          onBlur={handleChangeArrow}
+          onFocus={handleChangeArrow}
           className={styles.selectSprintInput}
           value=""
         >
-          <option className={styles.opcionInput} value="" disabled>
+          <option className={styles.opcionInput} value="">
             Designar sprint
           </option>
           {sprints.map((opcion, index) => (
@@ -76,6 +83,14 @@ export const CardTask: FC<ICardList> = ({ tarea, handleOpenModal }) => {
             </option>
           ))}
         </select>
+        <span
+          className={
+            "material-symbols-outlined " +
+            `${arrowDirection ? styles.arrowIcon : styles.arrowIcon2}`
+          }
+        >
+          keyboard_arrow_down
+        </span>
       </div>
 
       <div className={styles.actionCard}>
