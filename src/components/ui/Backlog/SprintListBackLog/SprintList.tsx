@@ -10,7 +10,6 @@ import { ModalSprint } from "../ModalsBacklog/ModalSprint";
 
 export const SprintList = () => {
   const setTareaActiva = sprintStore((state) => state.setsprintActiva);
-
   const { getSprints, sprints } = useSprint();
 
   useEffect(() => {
@@ -27,7 +26,6 @@ export const SprintList = () => {
   const handleCloseModal = () => {
     setOpenModalTarea(false);
   };
-
   return (
     <div className={styles.sprints}>
       <h1 className={styles.titleSprint}> Sprints</h1>

@@ -30,7 +30,11 @@ export const createTareaController = async (tareaNueva: ICreateTask) => {
   try {
     // Obtenemos la lista de proyectos actuales
     const tareasBd = await getTareasController();
-    const tareaNuevaAddedId: ITask = { ...tareaNueva, id: crypto.randomUUID() };
+    const tareaNuevaAddedId: ITask = {
+      ...tareaNueva,
+      id: crypto.randomUUID(),
+      estado: "pendiente",
+    };
 
     if (tareasBd) {
       // Si existen tareas, agregamos el nuevo a la lista y actualizamos

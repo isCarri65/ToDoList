@@ -58,7 +58,7 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 30px;
   flex-direction: column;
   background-color: #f8f8f8;
   border-radius: 5px;
@@ -96,8 +96,8 @@ textarea {
   border-radius: 40px;
   background-color: transparent;
   font-weight: 500;
-  color: #f80;
-  border: 0.08rem #f80 solid;
+  color: #fff;
+  border: none;
   box-shadow: 1px 1px 8px #f80;
   padding: 10px;
 }

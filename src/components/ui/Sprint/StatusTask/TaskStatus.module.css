@@ -1,3 +1,6 @@
-.tasks{
-    background-color: var(--primary-color);
+.tasks {
+  background-color: var(--primary-color);
+}
+.titleTasks {
+  color: #fff;
 }

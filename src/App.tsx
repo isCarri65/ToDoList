@@ -1,14 +1,14 @@
-import { BacklogScreen } from "./components/screens/BacklogScreen/BacklogScreen"
-import { SprintScreen } from "./components/screens/SprintScreen/SprintScreen"
-
+import { BrowserRouter } from "react-router-dom";
+import { AppRouter } from "./routes/appRouter";
 
 function App() {
   return (
     <>
-    <BacklogScreen />
-    {/* <SprintScreen/> */}
+      <BrowserRouter>
+        <AppRouter />
+      </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
