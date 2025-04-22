@@ -4,7 +4,7 @@
       {
         "id": "dcec0ad4-31e0-4279-8ccf-72bd1f20b52d",
         "titulo": "Tarea backlog",
-        "descripcion": "Descripcion tarea backlog",
+        "descripcion": "Descripción tarea backlog",
         "estado": "pendiente",
         "fechaLimite": "2025-03-05"
       },
@@ -54,6 +54,12 @@
             "id": "89cfbeee-5331-4046-b38e-2b6adcbf951c"
           }
         ]
+      },
+      {
+        "fechaInicio": "2025-04-03",
+        "fechaCierre": "2025-04-04",
+        "nombre": "algo",
+        "id": "10ad45f3-6fc1-4d03-87ff-b3325a8b9ea8"
       }
     ]
   }

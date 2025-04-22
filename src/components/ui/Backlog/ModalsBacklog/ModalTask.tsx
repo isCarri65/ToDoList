@@ -97,14 +97,19 @@ export const ModalTask: FC<IModal> = ({ handleCloseModal }) => {
 
           <div className={styles.buttonCard}>
             <button
+              style={{ background: "#f00" }}
               className={styles.buttonModalTask}
               onClick={handleCloseModal}
             >
               Cancelar
             </button>
 
-            <button className={styles.buttonModalTask} type="submit">
-              {tareaActiva ? "Editar tarea" : "Crear tarea"}
+            <button
+              style={{ background: "#00B300" }}
+              className={styles.buttonModalTask}
+              type="submit"
+            >
+              {tareaActiva ? "Guardar" : "Crear tarea"}
             </button>
           </div>
         </form>

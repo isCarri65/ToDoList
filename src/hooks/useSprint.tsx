@@ -2,12 +2,14 @@ import { useShallow } from "zustand/shallow";
 import {
   createSprintController,
   deleteSprintController,
+  getSprintByIdController,
   getSprintsController,
   updateSprintController,
 } from "../data/sprintControllers";
 import Swal from "sweetalert2";
 import { sprintStore } from "../store/sprintBackLogStore";
 import { ISprint } from "../types/ISprint";
+import { ICreateSprint } from "../types/ICreateSprint";
 
 export const useSprint = () => {
   const {
@@ -31,13 +33,17 @@ export const useSprint = () => {
     if (data) setArraysprints(data);
   };
 
-  const createSprint = async (newSprint: ISprint) => {
-    agregarNuevasprint(newSprint);
+  const getSprintById = async (id: string) => {
+    const sprint = await getSprintByIdController(id);
+    return sprint;
+  };
+
+  const createSprint = async (newSprint: ICreateSprint) => {
     try {
-      await createSprintController(newSprint);
+      const newSprintDb = await createSprintController(newSprint);
       Swal.fire("Éxito", "Sprint creada correctamente", "success");
+      if (newSprintDb) agregarNuevasprint(newSprintDb);
     } catch (error) {
-      eliminarUnasprint(newSprint.id!);
       console.log("Algo salió mal al crear la sprint");
     }
   };
@@ -84,5 +90,6 @@ export const useSprint = () => {
     createSprint,
     deleteSprint,
     sprints,
+    getSprintById,
   };
 };

@@ -1,18 +1,16 @@
-import { Header } from "../../ui/Header/Header"
-import { ListTasks } from "../../ui/Backlog/ListTasks/ListTasks"
-import { SprintList } from "../../ui/Backlog/SprintListBackLog/SprintList"
-import styles from "./BacklogScreen.module.css"
+import { Header } from "../../ui/Header/Header";
+import { ListTasks } from "../../ui/Backlog/ListTasks/ListTasks";
+import { SprintList } from "../../ui/Backlog/SprintListBackLog/SprintList";
+import styles from "./BacklogScreen.module.css";
 
 export const BacklogScreen = () => {
-
   return (
     <>
-    <Header></Header>
-    <div className={styles.containerPrincipalListTareas}>
-    <SprintList/>
-    <ListTasks/>
-    </div>
+      <Header title="Administrador de tareas: Backlog"></Header>
+      <div className={styles.containerPrincipalListTareas}>
+        <SprintList />
+        <ListTasks />
+      </div>
     </>
-   
-  )
-}
+  );
+};

@@ -10,8 +10,22 @@ export const getSprintsController = async () => {
     const response = await axios.get<ISprintList>(`${API_URL}/sprintList`);
     const responseParse = response.data.sprints;
     return responseParse;
-  } catch (errror) {
+  } catch (error) {
     throw new Error("Error al obtener tareas del Backlog");
+  }
+};
+
+export const getSprintByIdController = async (sprintId: string) => {
+  try {
+    const sprintsDb = await getSprintsController();
+    const sprint = sprintsDb.find((elem) => elem.id === sprintId);
+    if (sprint) {
+      return sprint;
+    } else {
+      throw new Error(`Sprint no encotrado con el id: ${sprintId}`);
+    }
+  } catch (error) {
+    throw new Error("error al obtener un sprint del controller");
   }
 };
 
@@ -51,7 +65,7 @@ export const createSprintController = async (newSprint: ICreateSprint) => {
       await putSprintList([newSprintAddedId]);
     }
 
-    return newSprint;
+    return newSprintAddedId;
   } catch (error) {
     console.log("Error en createProyectoController", error);
   }
