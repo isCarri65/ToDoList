@@ -3,11 +3,7 @@ import { ITask } from "../../../../types/ITask";
 import styles from "./CardTask.module.css";
 import { useTask } from "../../../../hooks/useTasks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEye,
-  faPencilSquare,
-  faTrashAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPencilSquare, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useSprint } from "../../../../hooks/useSprint";
 
 type ICardList = {
@@ -89,7 +85,7 @@ export const CardTask: FC<ICardList> = ({ tarea, handleOpenModal }) => {
             `${arrowDirection ? styles.arrowIcon : styles.arrowIcon2}`
           }
         >
-          keyboard_arrow_down
+          chevron_right
         </span>
       </div>
 

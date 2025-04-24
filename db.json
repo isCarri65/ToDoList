@@ -2,13 +2,6 @@
   "backlog": {
     "tareas": [
       {
-        "id": "dcec0ad4-31e0-4279-8ccf-72bd1f20b52d",
-        "titulo": "Tarea backlog",
-        "descripcion": "Descripción tarea backlog",
-        "estado": "pendiente",
-        "fechaLimite": "2025-03-05"
-      },
-      {
         "titulo": "qwe",
         "descripcion": "qwe",
         "estado": "",
@@ -27,39 +20,50 @@
   "sprintList": {
     "sprints": [
       {
-        "id": "b0e3f34b-68c6-49eb-b059-ab251ed81629",
-        "fechaInicio": "2025-03-04",
-        "fechaCierre": "2025-03-11",
-        "nombre": "qweqwe",
+        "fechaInicio": "2025-04-03",
+        "fechaCierre": "2025-04-04",
+        "nombre": "algo mas",
+        "id": "10ad45f3-6fc1-4d03-87ff-b3325a8b9ea8",
         "tareas": [
           {
-            "id": "50699dec-3d1a-45ff-a94d-82d416eac053",
-            "titulo": "Tarea 200",
-            "descripcion": "Editando tarea del sprint",
+            "titulo": "tarea 6",
+            "descripcion": "algo",
             "estado": "pendiente",
-            "fechaLimite": "2025-03-06"
+            "fechaLimite": "2025-04-18",
+            "id": "d4f2552d-ead9-4d8c-b0b5-3eb1d98d2663"
           },
           {
-            "titulo": "Algo",
-            "descripcion": "algo de algo",
-            "estado": "",
-            "fechaLimite": "2025-04-10",
-            "id": "7a3e561c-6eb7-4b6d-8bbb-ef4cda32ce51"
-          },
-          {
-            "titulo": "Tarea Secundaria",
-            "descripcion": "esta es una tarea de ejemplo",
-            "estado": "",
-            "fechaLimite": "2025-04-06",
-            "id": "89cfbeee-5331-4046-b38e-2b6adcbf951c"
+            "id": "dcec0ad4-31e0-4279-8ccf-72bd1f20b52d",
+            "titulo": "Tarea backlog",
+            "descripcion": "Descripción tarea backlog",
+            "estado": "pendiente",
+            "fechaLimite": "2025-03-05"
           }
         ]
       },
       {
-        "fechaInicio": "2025-04-03",
-        "fechaCierre": "2025-04-04",
+        "fechaInicio": "2025-04-10",
+        "fechaCierre": "2025-04-11",
         "nombre": "algo",
-        "id": "10ad45f3-6fc1-4d03-87ff-b3325a8b9ea8"
+        "id": "a82ad21b-0f88-4543-a55a-98e5cda403f6"
+      },
+      {
+        "fechaInicio": "2025-04-03",
+        "fechaCierre": "2025-04-25",
+        "nombre": "sprint4",
+        "id": "49664df7-4a4a-4da9-8f3b-406e35a533d3"
+      },
+      {
+        "fechaInicio": "2025-04-16",
+        "fechaCierre": "2025-04-10",
+        "nombre": "Jere",
+        "id": "e80a5c7b-2f6a-4f5a-9bba-0d9decd633aa"
+      },
+      {
+        "fechaInicio": "2025-04-02",
+        "fechaCierre": "2025-04-25",
+        "nombre": "DIa",
+        "id": "428afdb4-2048-4156-a9ca-70f4e86dc3cd"
       }
     ]
   }

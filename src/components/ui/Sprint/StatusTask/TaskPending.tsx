@@ -1,9 +1,20 @@
+import { FC } from "react";
+import { ITask } from "../../../../types/ITask";
 import styles from "./TaskStatus.module.css";
-
-export const TaskPending = () => {
+import { CardTaskTwo } from "../../Backlog/CardTaskTwo/CardTaskTwo";
+interface ITaskPending {
+  tasks: ITask[];
+  openModal: VoidFunction;
+}
+export const TaskPending: FC<ITaskPending> = ({ tasks, openModal }) => {
   return (
     <div className={styles.tasks}>
-      <h1 className={styles.titleTasks}> Tareas Pendientes</h1>
+      <p className={styles.stateTitle}>Tareas Pendientes</p>
+      <div>
+        {tasks.map((element) => (
+          <CardTaskTwo key={element.id} task={element} openModal={openModal} />
+        ))}
+      </div>
     </div>
   );
 };
