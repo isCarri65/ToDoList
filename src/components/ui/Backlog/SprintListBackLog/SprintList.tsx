@@ -9,22 +9,25 @@ import { ISprint } from "../../../../types/ISprint";
 import { ModalSprint } from "../ModalsBacklog/ModalSprint";
 
 export const SprintList = () => {
-  const setTareaActiva = sprintStore((state) => state.setsprintActiva);
+  const setSprintModalActiva = sprintStore(
+    (state) => state.setSprintModalActiva
+  );
   const { getSprints, sprints } = useSprint();
 
   useEffect(() => {
     getSprints();
   }, []);
 
-  const [openModalTarea, setOpenModalTarea] = useState(false);
+  const [openModalSprint, setOpenModalSprint] = useState(false);
 
-  const handleOpenModal = (tarea: ISprint) => {
-    setTareaActiva(tarea);
-    setOpenModalTarea(true);
+  const handleOpenModal = (sprint: ISprint) => {
+    setSprintModalActiva(sprint);
+    setOpenModalSprint(true);
   };
 
   const handleCloseModal = () => {
-    setOpenModalTarea(false);
+    setSprintModalActiva(null);
+    setOpenModalSprint(false);
   };
   return (
     <div className={styles.sprints}>
@@ -33,7 +36,7 @@ export const SprintList = () => {
       <button
         className={styles.addSprint}
         onClick={() => {
-          setOpenModalTarea(true);
+          setOpenModalSprint(true);
         }}
       >
         <FontAwesomeIcon icon={faThList} /> Agregar Sprint
@@ -54,7 +57,7 @@ export const SprintList = () => {
           </div>
         )}
       </div>
-      {openModalTarea && (
+      {openModalSprint && (
         <ModalSprint handleCloseModal={handleCloseModal}></ModalSprint>
       )}
     </div>

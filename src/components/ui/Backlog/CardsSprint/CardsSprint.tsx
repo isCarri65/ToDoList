@@ -1,10 +1,11 @@
-import { FC } from "react";
+import { FC, MouseEvent } from "react";
 import styles from "./CardSprint.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilSquare, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { ISprint } from "../../../../types/ISprint";
 import { useSprint } from "../../../../hooks/useSprint";
 import { useNavigate } from "react-router-dom";
+import { sprintStore } from "../../../../store/sprintBackLogStore";
 
 type ICardList = {
   sprint: ISprint;
@@ -13,17 +14,21 @@ type ICardList = {
 
 export const CardSprint: FC<ICardList> = ({ sprint, handleOpenModal }) => {
   const { deleteSprint } = useSprint();
+  const setsprintActiva = sprintStore((state) => state.setsprintActiva);
   const nav = useNavigate();
 
-  const eliminarTareaById = () => {
+  const eliminarTareaById = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     deleteSprint(sprint.id!);
   };
 
-  const editarTarea = () => {
+  const editarTarea = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     handleOpenModal(sprint);
   };
 
   const changeScreen = () => {
+    setsprintActiva(sprint);
     nav(`/Sprints/${sprint.id}`);
   };
 
@@ -44,13 +49,10 @@ export const CardSprint: FC<ICardList> = ({ sprint, handleOpenModal }) => {
       </div>
 
       <div className={styles.actionCard}>
-        <button
-          className={styles.buttonCardSprintDelete}
-          onClick={eliminarTareaById}
-        >
+        <button className={styles.buttonCardSprint} onClick={eliminarTareaById}>
           <FontAwesomeIcon icon={faTrashAlt} color="red" />
         </button>
-        <button className={styles.buttonCardSprintEdit} onClick={editarTarea}>
+        <button className={styles.buttonCardSprint} onClick={editarTarea}>
           <FontAwesomeIcon icon={faPencilSquare} color="#5195EF" />
         </button>
       </div>

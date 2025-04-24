@@ -56,6 +56,7 @@ export const createSprintController = async (newSprint: ICreateSprint) => {
     const newSprintAddedId: ISprint = {
       ...newSprint,
       id: crypto.randomUUID(),
+      tareas: [],
     };
     if (sprintBd) {
       // Si existen tareas, agregamos el nuevo a la lista y actualizamos

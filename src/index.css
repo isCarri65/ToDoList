@@ -1,6 +1,7 @@
 :root {
   /*Colors*/
   --primary-color: #f96930;
+  --primary-sprint-color: rgb(255, 255, 255);
   --color-letter-primary: white;
   --card-color: white;
   --card-letter-color: black;
@@ -9,6 +10,7 @@
   --background-inputs-task-color-one: #f1875d86;
   --background-inputs-task-color-two: #f99b767b;
   --placeholder-input-task: #fecdba;
+  --hover-sprintTasks:#ffffff9c ;
 
   /*Font Family*/
   --font-family-primary: "Inter", sans-serif;

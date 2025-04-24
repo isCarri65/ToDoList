@@ -16,17 +16,19 @@ const initialState: ICreateSprint = {
 };
 
 export const ModalSprint: FC<IModal> = ({ handleCloseModal }) => {
-  const sprintActiva = sprintStore((state) => state.sprintActiva);
+  const sprintModalActiva = sprintStore((state) => state.sprintModalActiva);
 
-  const setsprintActiva = sprintStore((state) => state.setsprintActiva);
+  const setSprintModalActiva = sprintStore(
+    (state) => state.setSprintModalActiva
+  );
 
   const { createSprint, editSprint } = useSprint();
 
   const [formValues, setFormValues] = useState<ICreateSprint>(initialState);
 
   useEffect(() => {
-    if (sprintActiva) {
-      setFormValues(sprintActiva);
+    if (sprintModalActiva) {
+      setFormValues(sprintModalActiva);
     } else {
       setFormValues((prev) => ({ ...prev, id: uuidv4() }));
     }
@@ -42,13 +44,16 @@ export const ModalSprint: FC<IModal> = ({ handleCloseModal }) => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (sprintActiva) {
-      editSprint({ ...formValues, id: sprintActiva.id });
+    if (sprintModalActiva) {
+      editSprint({
+        ...formValues,
+        id: sprintModalActiva.id,
+        tareas: sprintModalActiva.tareas,
+      });
     } else {
       createSprint(formValues);
     }
-
-    setsprintActiva(null);
+    setSprintModalActiva(null);
     handleCloseModal();
   };
 
@@ -56,7 +61,7 @@ export const ModalSprint: FC<IModal> = ({ handleCloseModal }) => {
     <div className={styles.containerPrincipalModal}>
       <div className={styles.contentPopUp}>
         <div className={styles.container}>
-          <h3>{sprintActiva ? "Editar Sprint" : "Crear Sprint"}</h3>
+          <h3>{sprintModalActiva ? "Editar Sprint" : "Crear Sprint"}</h3>
         </div>
 
         <form onSubmit={handleSubmit} className={styles.formContent}>
@@ -107,7 +112,7 @@ export const ModalSprint: FC<IModal> = ({ handleCloseModal }) => {
               className={styles.buttonModalTask}
               type="submit"
             >
-              {sprintActiva ? "Guardar" : "Crear sprint"}
+              {sprintModalActiva ? "Guardar" : "Crear sprint"}
             </button>
           </div>
         </form>

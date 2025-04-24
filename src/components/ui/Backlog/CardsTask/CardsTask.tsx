@@ -3,7 +3,11 @@ import { ITask } from "../../../../types/ITask";
 import styles from "./CardTask.module.css";
 import { useTask } from "../../../../hooks/useTasks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencilSquare, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronDown,
+  faPencilSquare,
+  faTrashAlt,
+} from "@fortawesome/free-solid-svg-icons";
 import { useSprint } from "../../../../hooks/useSprint";
 
 type ICardList = {
@@ -79,14 +83,10 @@ export const CardTask: FC<ICardList> = ({ tarea, handleOpenModal }) => {
             </option>
           ))}
         </select>
-        <span
-          className={
-            "material-symbols-outlined " +
-            `${arrowDirection ? styles.arrowIcon : styles.arrowIcon2}`
-          }
-        >
-          chevron_right
-        </span>
+        <FontAwesomeIcon
+          icon={faChevronDown}
+          className={arrowDirection ? styles.arrowIcon : styles.arrowIcon2}
+        />
       </div>
 
       <div className={styles.actionCard}>

@@ -4,13 +4,14 @@ import styles from "./TaskStatus.module.css";
 import { CardTaskTwo } from "../../Backlog/CardTaskTwo/CardTaskTwo";
 interface ITaskPending {
   tasks: ITask[];
-  openModal: VoidFunction;
+  openModal: (task: ITask) => void;
 }
+
 export const TaskPending: FC<ITaskPending> = ({ tasks, openModal }) => {
   return (
     <div className={styles.tasks}>
       <p className={styles.stateTitle}>Tareas Pendientes</p>
-      <div>
+      <div className={styles.taskContainer}>
         {tasks.map((element) => (
           <CardTaskTwo key={element.id} task={element} openModal={openModal} />
         ))}

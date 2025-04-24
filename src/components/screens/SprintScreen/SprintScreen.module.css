@@ -14,31 +14,40 @@
 }
 .titleContainer {
   position: relative;
+  z-index: 1px;
   height: 60px;
   display: flex;
-  align-items: center;
   flex-direction: column;
+  border-bottom: #fff solid 7px;
+  margin-bottom: 20px;
 }
 
 .buttonBackBacklogContainer {
-  width: 100%;
+  background-color: transparent;
+  padding: 0.2rem;
   position: absolute;
+  left: 0;
+  top: 0;
 }
-.buttonBackBacklogContainer button {
+.buttonBackBacklog {
   display: flex;
+  gap: 0.4rem;
   align-items: center;
   justify-content: center;
   background-color: transparent;
+  text-decoration: none;
   border: none;
   padding: 5px;
   color: #fff;
   cursor: pointer;
 }
-.buttonBackBacklogContainer button:hover p {
+
+.buttonBackBacklogContainer .buttonBackBacklog:hover p {
   text-decoration: underline;
 }
 .iconArrowBack {
   font-size: 1.4rem;
+  color: #fff;
 }
 .stateTaskContainer {
   background-color: var(--primary-color);

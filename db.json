@@ -2,18 +2,11 @@
   "backlog": {
     "tareas": [
       {
-        "titulo": "qwe",
-        "descripcion": "qwe",
-        "estado": "",
-        "fechaLimite": "2025-04-16",
-        "id": "dbe00bfe-2044-4d39-8c40-1ee6a852f65e"
-      },
-      {
-        "titulo": "One title",
-        "descripcion": "Dias dificiles se acercan",
-        "estado": "",
-        "fechaLimite": "0006-07-22",
-        "id": "0630aaac-2a3a-440b-a61b-366eecdcffd8"
+        "titulo": "Limpiar sala",
+        "descripcion": "agarrar una escoba",
+        "estado": "pendiente",
+        "fechaLimite": "2025-04-25",
+        "id": "43611638-664d-485d-ab3a-49959e17edfa"
       }
     ]
   },
@@ -26,9 +19,9 @@
         "id": "10ad45f3-6fc1-4d03-87ff-b3325a8b9ea8",
         "tareas": [
           {
-            "titulo": "tarea 6",
+            "titulo": "tarea 3123333",
             "descripcion": "algo",
-            "estado": "pendiente",
+            "estado": "completada",
             "fechaLimite": "2025-04-18",
             "id": "d4f2552d-ead9-4d8c-b0b5-3eb1d98d2663"
           },
@@ -38,32 +31,59 @@
             "descripcion": "Descripción tarea backlog",
             "estado": "pendiente",
             "fechaLimite": "2025-03-05"
+          },
+          {
+            "titulo": "qwe",
+            "descripcion": "qwe",
+            "estado": "",
+            "fechaLimite": "2025-04-16",
+            "id": "dbe00bfe-2044-4d39-8c40-1ee6a852f65e"
           }
         ]
-      },
-      {
-        "fechaInicio": "2025-04-10",
-        "fechaCierre": "2025-04-11",
-        "nombre": "algo",
-        "id": "a82ad21b-0f88-4543-a55a-98e5cda403f6"
       },
       {
         "fechaInicio": "2025-04-03",
         "fechaCierre": "2025-04-25",
         "nombre": "sprint4",
-        "id": "49664df7-4a4a-4da9-8f3b-406e35a533d3"
+        "id": "49664df7-4a4a-4da9-8f3b-406e35a533d3",
+        "tareas": [
+          {
+            "titulo": "One title",
+            "descripcion": "Dias dificiles se acercan",
+            "estado": "",
+            "fechaLimite": "0006-07-22",
+            "id": "0630aaac-2a3a-440b-a61b-366eecdcffd8"
+          },
+          {
+            "titulo": "Tarea ejempl",
+            "descripcion": "Una descripción de la tarea",
+            "estado": "en proceso",
+            "fechaLimite": "2025-04-26",
+            "id": "f175946f-0c4a-4620-aa61-cd01e95213c6"
+          }
+        ]
       },
       {
         "fechaInicio": "2025-04-16",
         "fechaCierre": "2025-04-10",
         "nombre": "Jere",
-        "id": "e80a5c7b-2f6a-4f5a-9bba-0d9decd633aa"
+        "id": "e80a5c7b-2f6a-4f5a-9bba-0d9decd633aa",
+        "tareas": [
+          {
+            "titulo": "qwe",
+            "descripcion": "qwe",
+            "estado": "pendiente",
+            "fechaLimite": "2025-04-09",
+            "id": "51eece61-be44-4cd6-b224-72893d07dc84"
+          }
+        ]
       },
       {
-        "fechaInicio": "2025-04-02",
-        "fechaCierre": "2025-04-25",
-        "nombre": "DIa",
-        "id": "428afdb4-2048-4156-a9ca-70f4e86dc3cd"
+        "fechaInicio": "2025-04-03",
+        "fechaCierre": "2025-04-26",
+        "nombre": "Orange",
+        "id": "20440116-198d-41d1-aa9c-3bf0c56699ae",
+        "tareas": []
       }
     ]
   }

@@ -10,6 +10,8 @@ import Swal from "sweetalert2";
 import { sprintStore } from "../store/sprintBackLogStore";
 import { ISprint } from "../types/ISprint";
 import { ICreateSprint } from "../types/ICreateSprint";
+import { ITask } from "../types/ITask";
+import { updateTareaSprintController } from "../data/tareaController";
 
 export const useSprint = () => {
   const {
@@ -18,6 +20,7 @@ export const useSprint = () => {
     agregarNuevasprint,
     eliminarUnasprint,
     editarUnasprint,
+    setSprintActiva,
   } = sprintStore(
     useShallow((state) => ({
       sprints: state.sprints,
@@ -25,6 +28,7 @@ export const useSprint = () => {
       agregarNuevasprint: state.agregarNuevasprint,
       eliminarUnasprint: state.eliminarUnasprint,
       editarUnasprint: state.editarUnasprint,
+      setSprintActiva: state.setsprintActiva,
     }))
   );
 
@@ -61,6 +65,16 @@ export const useSprint = () => {
     }
   };
 
+  const editTaskSprint = async (taskEdited: ITask, idSprint: string) => {
+    try {
+      await updateTareaSprintController(taskEdited, idSprint);
+      const updatedSprint = await getSprintByIdController(idSprint);
+      setSprintActiva(updatedSprint);
+    } catch (error) {
+      console.log("Error al editar una tarea y traer el sprint actulizado");
+    }
+  };
+
   const deleteSprint = async (idSprint: string) => {
     const estadoPrevio = sprints.find((el) => el.id === idSprint);
 
@@ -91,5 +105,6 @@ export const useSprint = () => {
     deleteSprint,
     sprints,
     getSprintById,
+    editTaskSprint,
   };
 };

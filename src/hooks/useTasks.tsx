@@ -89,6 +89,7 @@ export const useTask = () => {
   };
   const moveTaskToSprint = async (task: ITask, id: string) => {
     try {
+      console.log("mover tarea a sprint", task, id);
       await moverTareaASprintController(task, id);
       console.log("tarea movida");
       await getTask();

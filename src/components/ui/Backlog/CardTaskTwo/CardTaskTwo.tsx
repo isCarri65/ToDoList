@@ -3,8 +3,9 @@ import { ITask } from "../../../../types/ITask";
 import styles from "./CardTaskTwo.module.css";
 interface ICardTaskTwo {
   task: ITask;
-  openModal: VoidFunction;
+  openModal: (task: ITask) => void;
 }
+
 export const CardTaskTwo: FC<ICardTaskTwo> = ({ task, openModal }) => {
   return (
     <div className={styles.containerCard}>
@@ -14,7 +15,7 @@ export const CardTaskTwo: FC<ICardTaskTwo> = ({ task, openModal }) => {
           <b>Fecha límite: {task.fechaLimite}</b>
         </p>
       </div>
-      <div className={styles.iconContainer} onClick={openModal}>
+      <div className={styles.iconContainer} onClick={() => openModal(task)}>
         <span className="material-symbols-outlined">more_vert</span>
       </div>
     </div>
