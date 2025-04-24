@@ -30,13 +30,17 @@
   background-color: var(--hover-addTask);
 }
 .sprintsContainer {
-  max-height: 50vh; /* Ajusta según necesidad */
+  max-height: 55vh; /* Ajusta según necesidad */
   width: 100%;
+  display: flex;
+  gap: 0.3rem;
+  flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
   margin-top: 10px;
+  padding: 10px;
   border-radius: 8px;
-  background: #f8f8f8; /* Fondo opcional */
+  background: var(--primary-color); /* Fondo opcional */
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 }
 

@@ -1,0 +1,36 @@
+.containerCard {
+  width: 100%;
+  background-color: var(--card-color);
+  border-radius: 0.4rem;
+  padding: 0.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--card-letter-color);
+}
+.containerDescription {
+  width: 72%;
+}
+.title {
+  font-weight: 600;
+}
+.actionCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+  gap: 0.3rem;
+  width: 8%;
+}
+
+.arrowIcon2 {
+  position: absolute;
+  bottom: 0.55rem;
+  right: 1rem;
+  rotate: 90deg;
+  transition: rotate 0.2s ease-in;
+
+  pointer-events: none;
+}
+.iconContainer {
+  cursor: pointer;
+}
