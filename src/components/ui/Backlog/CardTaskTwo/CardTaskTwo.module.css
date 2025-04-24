@@ -1,5 +1,4 @@
 .containerCard {
-  width: 100%;
   background-color: var(--card-color);
   border-radius: 0.4rem;
   padding: 0.4rem;
@@ -7,9 +6,19 @@
   justify-content: space-between;
   align-items: center;
   color: var(--card-letter-color);
+  margin: 5px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.818);
+  cursor: pointer;
+}
+.containerCard:hover {
+  background-color: var(--hover-sprintTasks);
+  transform: scale(1.05);
+  transition: 0.4s ;
+  
 }
 .containerDescription {
   width: 72%;
+  
 }
 .title {
   font-weight: 600;

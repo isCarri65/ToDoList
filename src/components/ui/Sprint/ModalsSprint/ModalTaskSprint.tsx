@@ -5,10 +5,14 @@ import { ITask } from "../../../../types/ITask";
 import { ICreateTask } from "../../../../types/ICreateTask";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./ModalTaskSprint.module.css";
-
+import { updateTareaSprintController } from "../../../../data/tareaController";
+import { useParams } from "react-router-dom";
+import { useSprint } from "../../../../hooks/useSprint";
 type IModal = {
   handleCloseModal: VoidFunction;
+  refreshSprint: () => void;
 };
+
 
 const initialState: ICreateTask = {
   titulo: "",
@@ -17,7 +21,9 @@ const initialState: ICreateTask = {
   fechaLimite: "",
 };
 
-export const ModalTaskSprint: FC<IModal> = ({ handleCloseModal }) => {
+export const ModalTaskSprint: FC<IModal> = ({ handleCloseModal, refreshSprint }) => {
+  const { id } = useParams();
+  const { getSprintById } = useSprint();
   const tareaActiva = taskStore((state) => state.tareaActiva);
   const setTareaActiva = taskStore((state) => state.setTareaActiva);
   const { createTask, editTask, deleteTask } = useTask();
@@ -45,14 +51,13 @@ export const ModalTaskSprint: FC<IModal> = ({ handleCloseModal }) => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
-    if (tareaActiva) {
+    if (tareaActiva && id) {
       const taskEdited: ITask = { ...tareaActiva, ...formValues };
-      await editTask(taskEdited);
-    } else {
-      await createTask(formValues);
+      console.log(taskEdited);
+      await updateTareaSprintController(taskEdited, id);
+      await refreshSprint();
     }
-
+  
     setTareaActiva(null);
     handleCloseModal();
   };
@@ -113,9 +118,9 @@ export const ModalTaskSprint: FC<IModal> = ({ handleCloseModal }) => {
               </div>
           <div className={styles.statusSection}>
             <h3>Etiquetas</h3>
-            <button type="button" onClick={() => handleStatusChange("to-do")}>Tarea Pendiente</button>
-            <button type="button" onClick={() => handleStatusChange("in-progress")}>Tarea en proceso</button>
-            <button type="button" onClick={() => handleStatusChange("done")}>Tarea completa</button>
+            <button type="button" onClick={() => handleStatusChange("pendiente")}>Tarea Pendiente</button>
+            <button type="button" onClick={() => handleStatusChange("en proceso")}>Tarea en proceso</button>
+            <button type="button" onClick={() => handleStatusChange("completada")}>Tarea completa</button>
 
           <div className={styles.buttonCard}>
             <button

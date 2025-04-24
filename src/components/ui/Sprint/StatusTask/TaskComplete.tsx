@@ -5,8 +5,9 @@ import { CardTaskTwo } from "../../Backlog/CardTaskTwo/CardTaskTwo";
 
 interface ITaskComplete {
   tasks: ITask[];
-  openModal: VoidFunction;
+  openModal: (task: ITask) => void;
 }
+
 export const TaskComplete: FC<ITaskComplete> = ({ tasks, openModal }) => {
   return (
     <div className={styles.tasks}>

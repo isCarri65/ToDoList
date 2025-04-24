@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Header } from "../../ui/Header/Header";
 import { TaskComplete } from "../../ui/Sprint/StatusTask/TaskComplete";
 import { TaskPending } from "../../ui/Sprint/StatusTask/TaskPending";
@@ -9,6 +9,11 @@ import { useEffect, useState } from "react";
 import { ISprint } from "../../../types/ISprint";
 import { SprintList } from "../../ui/Backlog/SprintListBackLog/SprintList";
 import { ITask } from "../../../types/ITask";
+import { taskStore } from "../../../store/taskStore";
+import { ModalTaskSprint } from "../../ui/Sprint/ModalsSprint/ModalTaskSprint";
+import { taskModalStore } from "../../../store/taskModalStore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export const SprintScreen = () => {
   const { id } = useParams();
@@ -18,26 +23,35 @@ export const SprintScreen = () => {
   const [taskProccesing, setTaskProccesing] = useState<ITask[]>([]);
   const [taskComplete, setTaskComplete] = useState<ITask[]>([]);
 
-  const filterTask = () => {
-    if (sprint) {
-      console.log("sprint encontrado");
-      const filterCompleteTask = sprint.tareas.filter(
-        (tarea) => tarea.estado === "completada"
-      );
-      setTaskComplete(filterCompleteTask);
+  const setTareaActiva = taskStore((state) => state.setTareaActiva);
+  const isOpen = taskModalStore((state) => state.isOpen);
+  const openModal = taskModalStore((state) => state.openModal);
+  const closeModal = taskModalStore((state) => state.closeModal);
 
-      const filterPendingTask = sprint.tareas.filter(
-        (tarea) => tarea.estado === "pendiente"
-      );
-      setTaskPending(filterPendingTask);
-
-      const filterProccesingTask = sprint.tareas.filter(
-        (tarea) => tarea.estado === "en proceso"
-      );
-      setTaskProccesing(filterProccesingTask);
-    } else {
-      console.log("No se encontro sprint activo");
+  const refreshSprint = async () => {
+    if (id) {
+      const actualizado = await getSprintById(id);
+      setSprint(actualizado);
     }
+  };
+  
+  const filterTask = () => {
+    if (!sprint || !sprint.tareas) return; // 🚫 Evita el error
+  
+    const filterCompleteTask = sprint.tareas.filter(
+      (tarea) => tarea.estado === "completada"
+    );
+    setTaskComplete(filterCompleteTask);
+  
+    const filterPendingTask = sprint.tareas.filter(
+      (tarea) => tarea.estado === "pendiente"
+    );
+    setTaskPending(filterPendingTask);
+  
+    const filterProccesingTask = sprint.tareas.filter(
+      (tarea) => tarea.estado === "en proceso"
+    );
+    setTaskProccesing(filterProccesingTask);
   };
   const getSprint = async () => {
     try {
@@ -45,25 +59,36 @@ export const SprintScreen = () => {
         const selectSprint = await getSprintById(id);
         setSprint(selectSprint);
       }
-      filterTask();
     } catch {
       throw new Error("Error al tratar de conseguir un sprint por su id");
     }
   };
-  useEffect(() => {
-    getSprint();
-  }, []);
 
   useEffect(() => {
-    getSprint();
+    const fetchSprintAndFilter = async () => {
+      if (!id) return;
+  
+      const selectSprint = await getSprintById(id);
+      setSprint(selectSprint);
+  
+      if (!selectSprint || !selectSprint.tareas) return; // 🚫 Evita el error
+  
+      const tareas = selectSprint.tareas;
+  
+      setTaskComplete(tareas.filter((t) => t.estado === "completada"));
+      setTaskPending(tareas.filter((t) => t.estado === "pendiente"));
+      setTaskProccesing(tareas.filter((t) => t.estado === "en proceso"));
+    };
+  
+    fetchSprintAndFilter();
   }, [id]);
-  useEffect(() => {
-    filterTask();
-  }, [sprint]);
+  
 
-  const openModal = () => {
-    //logica para abrir el modal de la tarea activa
+  const handleOpenModal = (task: ITask) => {
+    setTareaActiva(task);
+    openModal();
   };
+
   return (
     <>
       <Header title="Administrador de tareas: Sprint"></Header>
@@ -73,16 +98,10 @@ export const SprintScreen = () => {
         <div className={styles.stateTaskContainer}>
           <div className={styles.titleContainer}>
             <div className={styles.buttonBackBacklogContainer}>
-              <button>
-                <span
-                  className={
-                    "material-symbols-outlined " + `${styles.iconArrowBack}`
-                  }
-                >
-                  arrow_back
-                </span>
+              <Link to="/" className={styles.buttonBackBacklog}>
+                <FontAwesomeIcon icon={faArrowLeft} color="black" />
                 <p>Regresar a backlog</p>
-              </button>
+              </Link>
             </div>
             <h3 style={{ textAlign: "center", fontSize: "2rem" }}>
               {sprint?.nombre}
@@ -90,12 +109,15 @@ export const SprintScreen = () => {
           </div>
 
           <div className={styles.taskColumContainer}>
-            <TaskPending tasks={taskPending} openModal={openModal} />
-            <TaskProccesing tasks={taskProccesing} openModal={openModal} />
-            <TaskComplete tasks={taskComplete} openModal={openModal} />
+          <TaskPending tasks={taskPending} openModal={handleOpenModal} />
+<TaskProccesing tasks={taskProccesing} openModal={handleOpenModal} />
+<TaskComplete tasks={taskComplete} openModal={handleOpenModal} />
+
           </div>
         </div>
       </div>
-    </>
+
+      {isOpen && <ModalTaskSprint handleCloseModal={closeModal} refreshSprint={refreshSprint} />}
+      </>
   );
 };

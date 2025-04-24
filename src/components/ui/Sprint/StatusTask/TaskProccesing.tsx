@@ -4,8 +4,9 @@ import styles from "./TaskStatus.module.css";
 import { CardTaskTwo } from "../../Backlog/CardTaskTwo/CardTaskTwo";
 interface ITaskProccesing {
   tasks: ITask[];
-  openModal: VoidFunction;
+  openModal: (task: ITask) => void;
 }
+
 export const TaskProccesing: FC<ITaskProccesing> = ({ tasks, openModal }) => {
   return (
     <div className={styles.tasks}>

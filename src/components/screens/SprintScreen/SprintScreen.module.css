@@ -16,14 +16,26 @@
   position: relative;
   height: 60px;
   display: flex;
-  align-items: center;
   flex-direction: column;
+  border-bottom: #fff solid 7px;
+  margin-bottom: 20px;
 }
 
 .buttonBackBacklogContainer {
-  width: 100%;
+  background-color: var(--placeholder-input-task);
+  padding: .8rem;
+  border-radius: 20px;
   position: absolute;
 }
+.buttonBackBacklog{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 .buttonBackBacklogContainer button {
   display: flex;
   align-items: center;
