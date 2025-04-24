@@ -1,9 +1,21 @@
+import { FC } from "react";
+import { ITask } from "../../../../types/ITask";
 import styles from "./TaskStatus.module.css";
+import { CardTaskTwo } from "../../Backlog/CardTaskTwo/CardTaskTwo";
 
-export const TaskComplete = () => {
+interface ITaskComplete {
+  tasks: ITask[];
+  openModal: VoidFunction;
+}
+export const TaskComplete: FC<ITaskComplete> = ({ tasks, openModal }) => {
   return (
     <div className={styles.tasks}>
-      <h1 className={styles.titleTasks}> Tareas Completas</h1>
+      <p className={styles.stateTitle}>Tareas Completas</p>
+      <div>
+        {tasks.map((element) => (
+          <CardTaskTwo key={element.id} task={element} openModal={openModal} />
+        ))}
+      </div>
     </div>
   );
 };

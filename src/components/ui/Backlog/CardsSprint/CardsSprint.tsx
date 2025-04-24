@@ -30,13 +30,17 @@ export const CardSprint: FC<ICardList> = ({ sprint, handleOpenModal }) => {
   return (
     <div onClick={changeScreen} className={styles.containerCard}>
       <div className={styles.containerDescription}>
-        <h3>{sprint.nombre}</h3>
-        <p>
-          <b>Fecha inicio: {sprint.fechaInicio}</b>
-        </p>
-        <p>
-          <b>Fecha limite: {sprint.fechaCierre}</b>
-        </p>
+        <div className={styles.sprintTitle}>
+          <h3>{sprint.nombre}</h3>
+        </div>
+        <div>
+          <p>
+            <b>Fecha inicio: {sprint.fechaInicio}</b>
+          </p>
+          <p>
+            <b>Fecha limite: {sprint.fechaCierre}</b>
+          </p>
+        </div>
       </div>
 
       <div className={styles.actionCard}>

@@ -4,5 +4,5 @@ export interface ICreateSprint {
   fechaInicio: string;
   fechaCierre: string;
   nombre: string;
-  tareas?: ITask[];
+  tareas: ITask[];
 }
