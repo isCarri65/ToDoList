@@ -6,13 +6,11 @@ import { ICreateTask } from "../../../../types/ICreateTask";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./ModalTaskSprint.module.css";
 import { updateTareaSprintController } from "../../../../data/tareaController";
-import { useParams } from "react-router-dom";
+import { sprintStore } from "../../../../store/sprintBackLogStore";
 import { useSprint } from "../../../../hooks/useSprint";
 type IModal = {
   handleCloseModal: VoidFunction;
-  refreshSprint: () => void;
 };
-
 
 const initialState: ICreateTask = {
   titulo: "",
@@ -21,12 +19,12 @@ const initialState: ICreateTask = {
   fechaLimite: "",
 };
 
-export const ModalTaskSprint: FC<IModal> = ({ handleCloseModal, refreshSprint }) => {
-  const { id } = useParams();
-  const { getSprintById } = useSprint();
+export const ModalTaskSprint: FC<IModal> = ({ handleCloseModal }) => {
+  const sprintActiva = sprintStore((state) => state.sprintActiva);
   const tareaActiva = taskStore((state) => state.tareaActiva);
   const setTareaActiva = taskStore((state) => state.setTareaActiva);
-  const { createTask, editTask, deleteTask } = useTask();
+  const { createTask, deleteTask } = useTask();
+  const { editTaskSprint } = useSprint();
 
   const [formValues, setFormValues] = useState<ICreateTask>(initialState);
 
@@ -51,13 +49,12 @@ export const ModalTaskSprint: FC<IModal> = ({ handleCloseModal, refreshSprint })
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (tareaActiva && id) {
+    if (tareaActiva && sprintActiva) {
       const taskEdited: ITask = { ...tareaActiva, ...formValues };
       console.log(taskEdited);
-      await updateTareaSprintController(taskEdited, id);
-      await refreshSprint();
+      await editTaskSprint(taskEdited, sprintActiva.id);
     }
-  
+
     setTareaActiva(null);
     handleCloseModal();
   };
@@ -78,78 +75,92 @@ export const ModalTaskSprint: FC<IModal> = ({ handleCloseModal, refreshSprint })
     <div className={styles.containerPrincipalModal} onClick={handleCloseModal}>
       <div className={styles.contentPopUp} onClick={handleModalClick}>
         <form className={styles.taskInfo} onSubmit={handleSubmit}>
-            <div className={styles.inputsInfo}>
-
-          <label>
-            <strong>Nombre Tarea:</strong>
-            <input
-              type="text"
-              name="titulo"
-              value={formValues.titulo}
-              className={styles.input}
-              onChange={handleChange}
-              required
+          <div className={styles.inputsInfo}>
+            <label>
+              <strong>Nombre Tarea:</strong>
+              <input
+                type="text"
+                name="titulo"
+                value={formValues.titulo}
+                className={styles.input}
+                onChange={handleChange}
+                required
               />
-          </label>
+            </label>
 
-          <label>
-            <strong>Descripción:</strong>
-            <textarea
-              name="descripcion"
-              value={formValues.descripcion}
-              className={styles.input}
-              onChange={handleChange}
-              required
+            <label>
+              <strong>Descripción:</strong>
+              <textarea
+                name="descripcion"
+                value={formValues.descripcion}
+                className={styles.input}
+                onChange={handleChange}
+                required
               />
-          </label>
+            </label>
 
-          <label>
-            <strong>Fecha de Entrega:</strong>
-            <input
-              type="date"
-              name="fechaLimite"
-              className={styles.input}
-              value={formValues.fechaLimite}
-              onChange={handleChange}
-              required
-            />
-          </label>
-
-              </div>
+            <label>
+              <strong>Fecha de Entrega:</strong>
+              <input
+                type="date"
+                name="fechaLimite"
+                className={styles.input}
+                value={formValues.fechaLimite}
+                onChange={handleChange}
+                required
+              />
+            </label>
+          </div>
           <div className={styles.statusSection}>
             <h3>Etiquetas</h3>
-            <button type="button" onClick={() => handleStatusChange("pendiente")}>Tarea Pendiente</button>
-            <button type="button" onClick={() => handleStatusChange("en proceso")}>Tarea en proceso</button>
-            <button type="button" onClick={() => handleStatusChange("completada")}>Tarea completa</button>
-
-          <div className={styles.buttonCard}>
+            <button
+              className={""}
+              type="button"
+              onClick={() => handleStatusChange("pendiente")}
+            >
+              Tarea Pendiente
+            </button>
             <button
               type="button"
-              style={{ background: "#f00" }}
-              className={styles.buttonModalTask}
-              onClick={handleCloseModal}
-              >
-              Cancelar
+              onClick={() => handleStatusChange("en proceso")}
+            >
+              Tarea en proceso
             </button>
-
             <button
               type="button"
-              style={{ background: "#f00" }}
-              className={styles.buttonModalTask}
-              onClick={handleDelete}
-              >
-              Eliminar
+              onClick={() => handleStatusChange("completada")}
+            >
+              Tarea completa
             </button>
 
-            <button
-              type="submit"
-              style={{ background: "#00B300" }}
-              className={styles.buttonModalTask}
+            <div className={styles.buttonCard}>
+              <button
+                type="button"
+                style={{ background: "#f00" }}
+                className={styles.buttonModalTask}
+                onClick={handleCloseModal}
               >
-              Aplicar
-            </button>
-          </div>
+                Cancelar
+              </button>
+
+              <button
+                type="button"
+                style={{ background: "#f00" }}
+                className={styles.buttonModalTask}
+                onClick={handleDelete}
+              >
+                Eliminar
+              </button>
+
+              <button
+                type="submit"
+                style={{ background: "#00B300" }}
+                className={styles.buttonModalTask}
+              >
+                Aplicar
+              </button>
             </div>
+          </div>
         </form>
       </div>
     </div>

@@ -28,16 +28,14 @@
   gap: 0.3rem;
 }
 
-.buttonCardSprintDelete {
+.buttonCardSprint {
   border: none;
   background-color: transparent;
   color: var(--card-letter-color);
   font-size: 27px;
+  cursor: pointer;
+  transition: 0.3s transform ease;
 }
-
-.buttonCardSprintEdit {
-  border: none;
-  background-color: transparent;
-  color: var(--card-letter-color);
-  font-size: 27px;
+.buttonCardSprint:hover {
+  transform: scale(1.2);
 }

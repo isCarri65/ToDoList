@@ -2,11 +2,11 @@
   "backlog": {
     "tareas": [
       {
-        "titulo": "qwe",
-        "descripcion": "qwe",
-        "estado": "",
-        "fechaLimite": "2025-04-16",
-        "id": "dbe00bfe-2044-4d39-8c40-1ee6a852f65e"
+        "titulo": "Limpiar sala",
+        "descripcion": "agarrar una escoba",
+        "estado": "pendiente",
+        "fechaLimite": "2025-04-25",
+        "id": "43611638-664d-485d-ab3a-49959e17edfa"
       }
     ]
   },
@@ -21,7 +21,7 @@
           {
             "titulo": "tarea 3123333",
             "descripcion": "algo",
-            "estado": "en proceso",
+            "estado": "completada",
             "fechaLimite": "2025-04-18",
             "id": "d4f2552d-ead9-4d8c-b0b5-3eb1d98d2663"
           },
@@ -29,8 +29,15 @@
             "id": "dcec0ad4-31e0-4279-8ccf-72bd1f20b52d",
             "titulo": "Tarea backlog",
             "descripcion": "Descripción tarea backlog",
-            "estado": "completada",
+            "estado": "pendiente",
             "fechaLimite": "2025-03-05"
+          },
+          {
+            "titulo": "qwe",
+            "descripcion": "qwe",
+            "estado": "",
+            "fechaLimite": "2025-04-16",
+            "id": "dbe00bfe-2044-4d39-8c40-1ee6a852f65e"
           }
         ]
       },
@@ -46,6 +53,13 @@
             "estado": "",
             "fechaLimite": "0006-07-22",
             "id": "0630aaac-2a3a-440b-a61b-366eecdcffd8"
+          },
+          {
+            "titulo": "Tarea ejempl",
+            "descripcion": "Una descripción de la tarea",
+            "estado": "en proceso",
+            "fechaLimite": "2025-04-26",
+            "id": "f175946f-0c4a-4620-aa61-cd01e95213c6"
           }
         ]
       },
@@ -65,10 +79,11 @@
         ]
       },
       {
-        "fechaInicio": "2025-04-02",
+        "fechaInicio": "2025-04-03",
         "fechaCierre": "2025-04-26",
-        "nombre": "qwe",
-        "id": "48e2e1e0-1968-45f4-b2ec-4cf6a2a2524e"
+        "nombre": "Orange",
+        "id": "20440116-198d-41d1-aa9c-3bf0c56699ae",
+        "tareas": []
       }
     ]
   }

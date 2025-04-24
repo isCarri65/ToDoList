@@ -11,7 +11,7 @@ export const TaskPending: FC<ITaskPending> = ({ tasks, openModal }) => {
   return (
     <div className={styles.tasks}>
       <p className={styles.stateTitle}>Tareas Pendientes</p>
-      <div>
+      <div className={styles.taskContainer}>
         {tasks.map((element) => (
           <CardTaskTwo key={element.id} task={element} openModal={openModal} />
         ))}

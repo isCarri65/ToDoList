@@ -12,7 +12,7 @@ export const TaskComplete: FC<ITaskComplete> = ({ tasks, openModal }) => {
   return (
     <div className={styles.tasks}>
       <p className={styles.stateTitle}>Tareas Completas</p>
-      <div>
+      <div className={styles.taskContainer}>
         {tasks.map((element) => (
           <CardTaskTwo key={element.id} task={element} openModal={openModal} />
         ))}

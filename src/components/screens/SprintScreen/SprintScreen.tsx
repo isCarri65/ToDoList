@@ -6,7 +6,6 @@ import { TaskProccesing } from "../../ui/Sprint/StatusTask/TaskProccesing";
 import styles from "./SprintScreen.module.css";
 import { useSprint } from "../../../hooks/useSprint";
 import { useEffect, useState } from "react";
-import { ISprint } from "../../../types/ISprint";
 import { SprintList } from "../../ui/Backlog/SprintListBackLog/SprintList";
 import { ITask } from "../../../types/ITask";
 import { taskStore } from "../../../store/taskStore";
@@ -14,50 +13,37 @@ import { ModalTaskSprint } from "../../ui/Sprint/ModalsSprint/ModalTaskSprint";
 import { taskModalStore } from "../../../store/taskModalStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { sprintStore } from "../../../store/sprintBackLogStore";
 
 export const SprintScreen = () => {
   const { id } = useParams();
   const { getSprintById } = useSprint();
-  const [sprint, setSprint] = useState<ISprint>();
   const [taskPending, setTaskPending] = useState<ITask[]>([]);
   const [taskProccesing, setTaskProccesing] = useState<ITask[]>([]);
   const [taskComplete, setTaskComplete] = useState<ITask[]>([]);
-
+  const setsprintActiva = sprintStore((state) => state.setsprintActiva);
+  const sprintActiva = sprintStore((state) => state.sprintActiva);
   const setTareaActiva = taskStore((state) => state.setTareaActiva);
   const isOpen = taskModalStore((state) => state.isOpen);
   const openModal = taskModalStore((state) => state.openModal);
   const closeModal = taskModalStore((state) => state.closeModal);
 
-  const refreshSprint = async () => {
-    if (id) {
-      const actualizado = await getSprintById(id);
-      setSprint(actualizado);
-    }
-  };
-  
   const filterTask = () => {
-    if (!sprint || !sprint.tareas) return; // 🚫 Evita el error
-  
-    const filterCompleteTask = sprint.tareas.filter(
-      (tarea) => tarea.estado === "completada"
+    if (!sprintActiva) return; // 🚫 Evita el error
+
+    setTaskComplete(
+      sprintActiva.tareas.filter((t) => t.estado === "completada")
     );
-    setTaskComplete(filterCompleteTask);
-  
-    const filterPendingTask = sprint.tareas.filter(
-      (tarea) => tarea.estado === "pendiente"
+    setTaskPending(sprintActiva.tareas.filter((t) => t.estado === "pendiente"));
+    setTaskProccesing(
+      sprintActiva.tareas.filter((t) => t.estado === "en proceso")
     );
-    setTaskPending(filterPendingTask);
-  
-    const filterProccesingTask = sprint.tareas.filter(
-      (tarea) => tarea.estado === "en proceso"
-    );
-    setTaskProccesing(filterProccesingTask);
   };
   const getSprint = async () => {
     try {
       if (id) {
         const selectSprint = await getSprintById(id);
-        setSprint(selectSprint);
+        setsprintActiva(selectSprint);
       }
     } catch {
       throw new Error("Error al tratar de conseguir un sprint por su id");
@@ -65,24 +51,12 @@ export const SprintScreen = () => {
   };
 
   useEffect(() => {
-    const fetchSprintAndFilter = async () => {
-      if (!id) return;
-  
-      const selectSprint = await getSprintById(id);
-      setSprint(selectSprint);
-  
-      if (!selectSprint || !selectSprint.tareas) return; // 🚫 Evita el error
-  
-      const tareas = selectSprint.tareas;
-  
-      setTaskComplete(tareas.filter((t) => t.estado === "completada"));
-      setTaskPending(tareas.filter((t) => t.estado === "pendiente"));
-      setTaskProccesing(tareas.filter((t) => t.estado === "en proceso"));
-    };
-  
-    fetchSprintAndFilter();
-  }, [id]);
-  
+    getSprint();
+  }, []);
+
+  useEffect(() => {
+    filterTask();
+  }, [sprintActiva]);
 
   const handleOpenModal = (task: ITask) => {
     setTareaActiva(task);
@@ -99,25 +73,27 @@ export const SprintScreen = () => {
           <div className={styles.titleContainer}>
             <div className={styles.buttonBackBacklogContainer}>
               <Link to="/" className={styles.buttonBackBacklog}>
-                <FontAwesomeIcon icon={faArrowLeft} color="black" />
+                <FontAwesomeIcon icon={faArrowLeft} color="white" />
                 <p>Regresar a backlog</p>
               </Link>
             </div>
             <h3 style={{ textAlign: "center", fontSize: "2rem" }}>
-              {sprint?.nombre}
+              {sprintActiva?.nombre}
             </h3>
           </div>
 
           <div className={styles.taskColumContainer}>
-          <TaskPending tasks={taskPending} openModal={handleOpenModal} />
-<TaskProccesing tasks={taskProccesing} openModal={handleOpenModal} />
-<TaskComplete tasks={taskComplete} openModal={handleOpenModal} />
-
+            <TaskPending tasks={taskPending} openModal={handleOpenModal} />
+            <TaskProccesing
+              tasks={taskProccesing}
+              openModal={handleOpenModal}
+            />
+            <TaskComplete tasks={taskComplete} openModal={handleOpenModal} />
           </div>
         </div>
       </div>
 
-      {isOpen && <ModalTaskSprint handleCloseModal={closeModal} refreshSprint={refreshSprint} />}
-      </>
+      {isOpen && <ModalTaskSprint handleCloseModal={closeModal} />}
+    </>
   );
 };
