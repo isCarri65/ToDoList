@@ -2,37 +2,34 @@ import { FC, useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { taskStore } from "../../../../store/taskStore";
 import { useTask } from "../../../../hooks/useTasks";
 import { ITask } from "../../../../types/ITask";
-import { ICreateTask } from "../../../../types/ICreateTask";
-import { v4 as uuidv4 } from "uuid";
 import styles from "./ModalTaskSprint.module.css";
-import { updateTareaSprintController } from "../../../../data/tareaController";
 import { sprintStore } from "../../../../store/sprintBackLogStore";
 import { useSprint } from "../../../../hooks/useSprint";
 type IModal = {
   handleCloseModal: VoidFunction;
 };
 
-const initialState: ICreateTask = {
+const initialState: ITask = {
   titulo: "",
   descripcion: "",
-  estado: "to-do",
   fechaLimite: "",
+  id: "",
+  estado: "",
+  color: "",
 };
 
 export const ModalTaskSprint: FC<IModal> = ({ handleCloseModal }) => {
   const sprintActiva = sprintStore((state) => state.sprintActiva);
   const tareaActiva = taskStore((state) => state.tareaActiva);
   const setTareaActiva = taskStore((state) => state.setTareaActiva);
-  const { createTask, deleteTask } = useTask();
+  const { moveTaskToBacklog } = useTask();
   const { editTaskSprint } = useSprint();
 
-  const [formValues, setFormValues] = useState<ICreateTask>(initialState);
+  const [formValues, setFormValues] = useState<ITask>(initialState);
 
   useEffect(() => {
     if (tareaActiva) {
       setFormValues(tareaActiva);
-    } else {
-      setFormValues((prev) => ({ ...prev, id: uuidv4() }));
     }
   }, [tareaActiva]);
 
@@ -60,15 +57,24 @@ export const ModalTaskSprint: FC<IModal> = ({ handleCloseModal }) => {
   };
 
   const handleDelete = async () => {
-    if (tareaActiva) {
-      await deleteTask(tareaActiva.id);
-      setTareaActiva(null);
-      handleCloseModal();
+    try {
+      if (sprintActiva && tareaActiva) {
+        await moveTaskToBacklog(tareaActiva.id, sprintActiva.id);
+        setTareaActiva(null);
+        handleCloseModal();
+      } else {
+        console.log("sprint activa no encontrada");
+      }
+    } catch (error) {
+      console.error("Error al mover una tarea al backlog");
     }
   };
-
   const handleModalClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
+  };
+  const handleButtonClose = () => {
+    setTareaActiva(null);
+    handleCloseModal();
   };
 
   return (
@@ -114,19 +120,33 @@ export const ModalTaskSprint: FC<IModal> = ({ handleCloseModal }) => {
           <div className={styles.statusSection}>
             <h3>Etiquetas</h3>
             <button
-              className={""}
+              className={
+                formValues.estado === "pendiente"
+                  ? styles.activeStatus
+                  : styles.inactiveStatus
+              }
               type="button"
               onClick={() => handleStatusChange("pendiente")}
             >
               Tarea Pendiente
             </button>
             <button
+              className={
+                formValues.estado === "en proceso"
+                  ? styles.activeStatus
+                  : styles.inactiveStatus
+              }
               type="button"
               onClick={() => handleStatusChange("en proceso")}
             >
               Tarea en proceso
             </button>
             <button
+              className={
+                formValues.estado === "completada"
+                  ? styles.activeStatus
+                  : styles.inactiveStatus
+              }
               type="button"
               onClick={() => handleStatusChange("completada")}
             >
@@ -138,7 +158,7 @@ export const ModalTaskSprint: FC<IModal> = ({ handleCloseModal }) => {
                 type="button"
                 style={{ background: "#f00" }}
                 className={styles.buttonModalTask}
-                onClick={handleCloseModal}
+                onClick={handleButtonClose}
               >
                 Cancelar
               </button>
@@ -149,7 +169,7 @@ export const ModalTaskSprint: FC<IModal> = ({ handleCloseModal }) => {
                 className={styles.buttonModalTask}
                 onClick={handleDelete}
               >
-                Eliminar
+                Devolver al Backlog
               </button>
 
               <button

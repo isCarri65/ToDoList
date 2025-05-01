@@ -1,9 +1,10 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"; // Importar estilos de react-datepicker
 import { taskStore } from "../../../../store/taskStore";
 import styles from "./ModalTask.module.css";
 import { ITask } from "../../../../types/ITask";
 import { useTask } from "../../../../hooks/useTasks";
-import { v4 as uuidv4 } from "uuid";
 import { ICreateTask } from "../../../../types/ICreateTask";
 
 type IModal = {
@@ -13,7 +14,6 @@ type IModal = {
 const initialState: ICreateTask = {
   titulo: "",
   descripcion: "",
-  estado: "",
   fechaLimite: "",
 };
 
@@ -28,11 +28,13 @@ export const ModalTask: FC<IModal> = ({ handleCloseModal }) => {
 
   useEffect(() => {
     if (tareaActiva) {
-      setFormValues(tareaActiva);
-    } else {
-      setFormValues((prev) => ({ ...prev, id: uuidv4() }));
+      setFormValues({
+        titulo: tareaActiva.titulo,
+        descripcion: tareaActiva.descripcion,
+        fechaLimite: tareaActiva.fechaLimite,
+      });
     }
-  }, []);
+  }, [tareaActiva]); // Agregado tareaActiva como dependencia
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -41,18 +43,32 @@ export const ModalTask: FC<IModal> = ({ handleCloseModal }) => {
     setFormValues((prev) => ({ ...prev, [`${name}`]: value }));
   };
 
+  const handleDateChange = (date: Date | null) => {
+    if (date) {
+      setFormValues((prev) => ({
+        ...prev,
+        fechaLimite: date.toISOString().split("T")[0],
+      }));
+    }
+  };
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    if (tareaActiva) {
-      const taskEdited: ITask = { ...tareaActiva, ...formValues };
-      editTask(taskEdited);
-    } else {
-      createTask(formValues);
-    }
+    try {
+      if (tareaActiva) {
+        const taskEdited: ITask = { ...tareaActiva, ...formValues };
+        editTask(taskEdited);
+      } else {
+        createTask(formValues);
+      }
 
-    setTareaActiva(null);
-    handleCloseModal();
+      setTareaActiva(null);
+      handleCloseModal();
+    } catch (error) {
+      console.error("Error al guardar la tarea:", error);
+      alert("Ocurrió un error al guardar la tarea. Inténtalo de nuevo.");
+    }
   };
 
   return (
@@ -63,49 +79,59 @@ export const ModalTask: FC<IModal> = ({ handleCloseModal }) => {
         </div>
 
         <form onSubmit={handleSubmit} className={styles.formContent}>
-          <div className={styles.InputContainer}>
-            <input
-              className={styles.input}
-              placeholder="Ingrese un título"
-              type="text"
-              required
-              onChange={handleChange}
-              value={formValues.titulo}
-              autoComplete="off"
-              name="titulo"
-            />
-
-            <textarea
-              className={styles.input + " " + styles.inputTextarea}
-              placeholder="Ingrese una descripción"
-              onChange={handleChange}
-              value={formValues.descripcion}
-              name="descripcion"
-            ></textarea>
-
-            <input
-              className={styles.input + " " + styles.inputDate}
-              type="date"
-              required
-              onChange={handleChange}
-              value={formValues.fechaLimite}
-              autoComplete="off"
-              name="fechaLimite"
-            />
+          <div className={styles.InputsContainer}>
+            <div className={styles.inputContainer}>
+              <label htmlFor="titulo">Titulo: </label>
+              <input
+                className={styles.input}
+                placeholder="Ingrese un título"
+                type="text"
+                required
+                onChange={handleChange}
+                value={formValues.titulo}
+                autoComplete="off"
+                name="titulo"
+                aria-label="Título de la tarea" // Mejora de accesibilidad
+              />
+            </div>
+            <div className={styles.inputTextareaContainer}>
+              <label htmlFor="descripcion">Descripcion: </label>
+              <textarea
+                className={`${styles.input} ${styles.inputTextarea}`} // Concatenación de clases mejorada
+                placeholder="Ingrese una descripción"
+                onChange={handleChange}
+                value={formValues.descripcion}
+                name="descripcion"
+                aria-label="Descripción de la tarea" // Mejora de accesibilidad
+              ></textarea>
+            </div>
+            <div className={styles.inputContainer}>
+              <label htmlFor="fechaLimite">Fecha Límite: </label>
+              <DatePicker
+                selected={
+                  formValues.fechaLimite
+                    ? new Date(formValues.fechaLimite)
+                    : null
+                }
+                onChange={handleDateChange}
+                dateFormat="yyyy-MM-dd"
+                className={styles.input}
+                placeholderText="Seleccione una fecha"
+                aria-label="Fecha límite de la tarea" // Mejora de accesibilidad
+              />
+            </div>
           </div>
 
           <div className={styles.buttonCard}>
             <button
-              style={{ background: "#f00" }}
-              className={styles.buttonModalTask}
+              className={`${styles.buttonModalTask} ${styles.buttonCancel}`} // Estilo movido a CSS
               onClick={handleCloseModal}
             >
               Cancelar
             </button>
 
             <button
-              style={{ background: "#00B300" }}
-              className={styles.buttonModalTask}
+              className={`${styles.buttonModalTask} ${styles.buttonSubmit}`} // Estilo movido a CSS
               type="submit"
             >
               {tareaActiva ? "Guardar" : "Crear tarea"}

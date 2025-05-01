@@ -4,4 +4,5 @@ export interface ITask {
   descripcion: string;
   estado: string;
   fechaLimite: string;
+  color: string;
 }

@@ -5,11 +5,21 @@ import {
   deleteTareaController,
   getTareasController,
   createTareaController,
-  moverTareaASprintController,
 } from "../data/tareaController";
 import { ITask } from "../types/ITask";
 import Swal from "sweetalert2";
 import { ICreateTask } from "../types/ICreateTask";
+import {
+  addTaskBacklogController,
+  getTasksBacklogController,
+} from "../data/backlogController";
+import {
+  addTaskSprintController,
+  moveTaskBacklogSprintController,
+} from "../data/sprintControllers";
+import { handleAxiosError } from "../utils/handleAxiosError";
+import { sprintStore } from "../store/sprintBackLogStore";
+import { useSprint } from "./useSprint";
 
 export const useTask = () => {
   const {
@@ -27,6 +37,8 @@ export const useTask = () => {
       editarUnaTarea: state.editarUnaTarea,
     }))
   );
+  const setSprintActiva = sprintStore((state) => state.setsprintActiva);
+  const { getSprints } = useSprint();
   const actionSearch = async (searchTerm: string) => {
     const data = await getTareasController();
     if (data) {
@@ -37,24 +49,38 @@ export const useTask = () => {
     }
   };
   const getTask = async () => {
-    const data = await getTareasController();
-    if (data) setArrayTareas(data);
+    try {
+      const tasks = await getTasksBacklogController();
+      if (tasks) {
+        setArrayTareas(tasks);
+      } else {
+        setArrayTareas([]);
+      }
+    } catch (error) {
+      const message = handleAxiosError(error);
+      console.error("Error al traer tareas del backlog: ", message);
+    }
   };
 
   const createTask = async (nuevaTarea: ICreateTask) => {
     try {
-      await createTareaController(nuevaTarea);
-      const tasks = await getTareasController();
+      const createdTask = await createTareaController(nuevaTarea);
+      if (!createdTask) {
+        throw new Error("No se pudo crear una tarea");
+      }
+      const backlog = await addTaskBacklogController(createdTask.id);
+
+      if (backlog) {
+        await getTask();
+      }
       Swal.fire("Éxito", "Tarea creada correctamente", "success");
-      setArrayTareas(tasks);
     } catch (error) {
-      console.log("Algo salió mal al crear la tarea");
+      console.log("Algo salió mal al agregar una tarea al backlog");
     }
   };
 
   const editTask = async (tareaEditada: ITask) => {
     const estadoPrevio = tareas.find((el) => el.id === tareaEditada.id);
-
     editarUnaTarea(tareaEditada);
     try {
       await updateTareaController(tareaEditada);
@@ -87,12 +113,24 @@ export const useTask = () => {
       console.log("Algo salió mal al editar");
     }
   };
-  const moveTaskToSprint = async (task: ITask, id: string) => {
+  const moveTaskToSprint = async (taskId: string, id: string) => {
     try {
-      console.log("mover tarea a sprint", task, id);
-      await moverTareaASprintController(task, id);
-      console.log("tarea movida");
+      const updatedSprint = await addTaskSprintController(taskId, id);
+      if (!updatedSprint) throw new Error("Error en mover una tarea al sprint");
       await getTask();
+      setSprintActiva(updatedSprint);
+    } catch (error) {
+      throw new Error("Error al mover tarea a un sprint");
+    }
+  };
+  const moveTaskToBacklog = async (taskId: string, id: string) => {
+    try {
+      const updatedSprint = await moveTaskBacklogSprintController(taskId, id);
+      if (!updatedSprint) throw new Error("Error en mover una tarea al sprint");
+      console.log(updatedSprint);
+      setSprintActiva(updatedSprint);
+      await getTask();
+      await getSprints();
       console.log("Obtener tareas");
     } catch (error) {
       throw new Error("Error al mover tarea a un sprint");
@@ -106,6 +144,7 @@ export const useTask = () => {
     deleteTask,
     actionSearch,
     moveTaskToSprint,
+    moveTaskToBacklog,
     tareas,
   };
 };

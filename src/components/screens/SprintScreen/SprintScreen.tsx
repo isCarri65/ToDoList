@@ -29,7 +29,7 @@ export const SprintScreen = () => {
   const closeModal = taskModalStore((state) => state.closeModal);
 
   const filterTask = () => {
-    if (!sprintActiva) return; // 🚫 Evita el error
+    if (!sprintActiva) return;
 
     setTaskComplete(
       sprintActiva.tareas.filter((t) => t.estado === "completada")
@@ -41,9 +41,15 @@ export const SprintScreen = () => {
   };
   const getSprint = async () => {
     try {
+      console.log("entrando en getsprint  id: " + id);
       if (id) {
         const selectSprint = await getSprintById(id);
-        setsprintActiva(selectSprint);
+        console.log(selectSprint);
+        if (selectSprint) {
+          setsprintActiva(selectSprint);
+        } else {
+          console.log("no se encontro un sprint activa");
+        }
       }
     } catch {
       throw new Error("Error al tratar de conseguir un sprint por su id");

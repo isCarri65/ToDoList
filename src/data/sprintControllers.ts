@@ -1,86 +1,93 @@
 import axios from "axios";
-import { ISprintList } from "../types/ISprintList";
 import { API_URL } from "../utils/constantes";
 import { ISprint } from "../types/ISprint";
-import { putSprintList } from "../http/sprintList";
 import { ICreateSprint } from "../types/ICreateSprint";
+import { handleAxiosError } from "../utils/handleAxiosError";
 
 export const getSprintsController = async () => {
   try {
-    const response = await axios.get<ISprintList>(`${API_URL}/sprintList`);
-    const responseParse = response.data.sprints;
-    return responseParse;
+    const response = await axios.get<ISprint[]>(`${API_URL}/sprints`);
+    const sprints = response.data;
+    return sprints;
   } catch (error) {
-    throw new Error("Error al obtener tareas del Backlog");
+    const message = handleAxiosError(error);
+    console.error("Error al obtener sprints: ", message);
   }
 };
 
 export const getSprintByIdController = async (sprintId: string) => {
   try {
-    const sprintsDb = await getSprintsController();
-    const sprint = sprintsDb.find((elem) => elem.id === sprintId);
-    if (sprint) {
-      return sprint;
-    } else {
-      throw new Error(`Sprint no encotrado con el id: ${sprintId}`);
-    }
+    const response = await axios.get<ISprint>(`${API_URL}/sprints/${sprintId}`);
+    const sprint = response.data;
+    return sprint;
   } catch (error) {
-    throw new Error("error al obtener un sprint del controller");
+    const message = handleAxiosError(error);
+    console.error("Error al obtener sprint por su id: ", message);
   }
 };
 
 export const updateSprintController = async (sprintActualizado: ISprint) => {
   try {
-    // Obtenemos la lista de sprints actuales
-    const sprintsBd = await getSprintsController();
-
-    if (sprintsBd) {
-      // Mapeamos los sprints y reemplazamos el que coincida con el ID del actualizado
-      const result = sprintsBd.map((sprint) =>
-        sprint.id === sprintActualizado.id
-          ? { ...sprint, ...sprintActualizado } // Actualizamos los datos del sprint
-          : sprint
-      );
-
-      await putSprintList(result); // Guardamos la nueva lista de proyectos
-    }
-    return sprintActualizado; // Retornamos el proyecto actualizado
+    const response = await axios.put<ISprint>(
+      `${API_URL}/sprints/${sprintActualizado.id}`,
+      sprintActualizado
+    );
+    const updatedSprint = response.data;
+    return updatedSprint;
   } catch (error) {
-    console.log("Error en updateProyectoController", error);
+    const message = handleAxiosError(error);
+    console.error("Error al actulizar un sprint: ", message);
   }
 };
 export const createSprintController = async (newSprint: ICreateSprint) => {
   try {
-    // Obtenemos la lista de proyectos actuales
-    const sprintBd = await getSprintsController();
-    const newSprintAddedId: ISprint = {
-      ...newSprint,
-      id: crypto.randomUUID(),
-      tareas: [],
-    };
-    if (sprintBd) {
-      // Si existen tareas, agregamos el nuevo a la lista y actualizamos
-      await putSprintList([...sprintBd, newSprintAddedId]);
-    } else {
-      // Si no existen tareas, creamos la lista con la nueva tarea
-      await putSprintList([newSprintAddedId]);
-    }
-
-    return newSprintAddedId;
+    const response = await axios.post<ISprint>(`${API_URL}/sprints`, newSprint);
+    const createdSprint = response.data;
+    return createdSprint;
   } catch (error) {
-    console.log("Error en createProyectoController", error);
+    const message = handleAxiosError(error);
+    console.error("Error al crear un sprint: ", message);
   }
 };
 
 export const deleteSprintController = async (idSprint: string) => {
   try {
-    const sprintBd = await getSprintsController();
-
-    if (sprintBd) {
-      const result = sprintBd.filter((sprint) => sprint.id !== idSprint);
-      putSprintList(result);
-    }
+    const response = await axios.delete(`${API_URL}/sprints/${idSprint}`);
+    return response;
   } catch (error) {
-    console.log("Error en deleteProyectoController", error);
+    const message = handleAxiosError(error);
+    console.error("Error al eliminar un sprint: ", message);
+  }
+};
+
+export const addTaskSprintController = async (
+  idtask: string,
+  idSprint: string
+) => {
+  console.log("idTask: " + idtask + ", idSprint: " + idSprint);
+  try {
+    const response = await axios.put<ISprint>(
+      `${API_URL}/sprints/${idSprint}/add-task/${idtask}`
+    );
+    const updatedSprint = response.data;
+    return updatedSprint;
+  } catch (error) {
+    const message = handleAxiosError(error);
+    console.error("Error al actulizar un sprint: ", message);
+  }
+};
+export const moveTaskBacklogSprintController = async (
+  idtask: string,
+  idSprint: string
+) => {
+  try {
+    const response = await axios.put<ISprint>(
+      `${API_URL}/sprints/${idSprint}/move-task-to-backlog/${idtask}`
+    );
+    const updatedSprint = response.data;
+    return updatedSprint;
+  } catch (error) {
+    const message = handleAxiosError(error);
+    console.error("Error al actulizar un sprint: ", message);
   }
 };

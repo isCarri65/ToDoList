@@ -1,109 +1,122 @@
 .containerPrincipalModal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
-  
-  .contentPopUp {
-    background-color: #fff;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 800px;
 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+.contentPopUp {
+  background-color: #fff;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
-  
-  .taskInfo {
-    display: flex;
-    flex-direction: row;
-    overflow: hidden;
-    background-color: var(--color-letter-primary);
-    gap: 1rem;
-    font-size: 1.1rem;
- }
-  
-  .statusSection {
-    background-color: #ff642e;
-    height: auto;
-    color: var(--color-letter-primary);
-    padding: 1rem .5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem
-  }
-  
-  .statusSection h3 {
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-  }
-  
-  .statusSection button {
-    background-color: var(--color-letter-primary);
-    color: #000;
-    width: 100%;
-    font-weight: bold;
-    padding: 0.6rem 1rem;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-  }
-  
-  .statusSection button:hover {
-    transform: scale(1.05);
-    background-color: var(--placeholder-input-task);
-  }
-  .inputsInfo{
-    padding: 1rem;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-  }
-  .input {
-    width: 100%;
-    height: 40px;
-    border: none;
-    outline: none;
-    letter-spacing: 0.8px;
-    color: #000;
-    font-size: 13.4px;
-    border-bottom: solid #f80 1.5px;
-    border-radius: 3px;
-    margin: 5px;
-  }
 
-  .buttonCard {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: column;
-    padding: .7rem;
-    width: 100%;
-    border-top: 1px solid #ddd;
-  }
-  
-  .buttonModalTask {
-    color: var(--color-letter-primary);
-    font-weight: bold;
-    padding: 0.8rem 1.2rem;
-    margin: 10px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-  }
-  
-  .buttonModalTask:hover {
-    opacity: 0.9;
-  }
-  
+.taskInfo {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  background-color: var(--color-letter-primary);
+  gap: 1rem;
+  font-size: 1.1rem;
+}
+
+.statusSection {
+  background-color: #ff642e;
+  height: auto;
+  color: var(--color-letter-primary);
+  padding: 1rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.statusSection h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.inputsInfo {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.input {
+  width: 100%;
+  height: 40px;
+  border: none;
+  outline: none;
+  letter-spacing: 0.8px;
+  color: #000;
+  font-size: 13.4px;
+  border-bottom: solid #f80 1.5px;
+  border-radius: 3px;
+  margin: 5px;
+}
+
+.buttonCard {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  padding: 0.7rem;
+  border-top: 1px solid #ddd;
+}
+
+.buttonModalTask {
+  color: var(--color-letter-primary);
+  font-weight: bold;
+  padding: 0.8rem 1.2rem;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.buttonModalTask:hover {
+  opacity: 0.6;
+}
+.activeStatus {
+  background-color: var(--color-letter-primary);
+  color: #000;
+  width: 100%;
+  font-weight: bold;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  transform: scale(1.05);
+  background-color: var(--placeholder-input-task);
+}
+
+.inactiveStatus {
+  background-color: var(--color-letter-primary);
+  color: #000;
+  width: 100%;
+  font-weight: bold;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.activeStatus:hover,
+.inactiveStatus:hover {
+  opacity: 0.8;
+}

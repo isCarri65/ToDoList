@@ -1,93 +1,73 @@
 import axios from "axios";
 import { API_URL } from "../utils/constantes";
-import { IBacklog } from "../types/IBacklog";
 import { ITask } from "../types/ITask";
-import { putBacklog } from "../http/backlog";
-import { getSprintsController } from "./sprintControllers";
-import { putSprintList } from "../http/sprintList";
 import { ICreateTask } from "../types/ICreateTask";
+import { handleAxiosError } from "../utils/handleAxiosError";
 
 export const getTareasController = async () => {
   try {
-    const response = await axios.get<IBacklog>(`${API_URL}/backlog`);
-    const responseParse = response.data.tareas;
-    return responseParse;
-  } catch (errror) {
-    throw new Error("Error al obtener tareas del Backlog");
+    const response = await axios.get<ITask[]>(`${API_URL}/tasks`);
+    const tareas = response.data;
+    return tareas;
+  } catch (error) {
+    const message = handleAxiosError(error);
+    console.error("Error al obtener tareas: ", message);
   }
 };
 export const getTareaByIdController = async (idTask: string) => {
   try {
-    const response = await axios.get<IBacklog>(`${API_URL}/backlog`);
-    const taskParse = response.data.tareas;
-    const task = taskParse.find((taskE) => taskE.id === idTask);
+    const response = await axios.get<ITask>(`${API_URL}/tasks/${idTask}`);
+    const task = response.data;
     return task;
   } catch (error) {
-    throw new Error("Error al obtener tarea del Backlog");
+    const message = handleAxiosError(error);
+    console.error("Error al traer un tarea por su id: ", message);
   }
 };
 export const createTareaController = async (tareaNueva: ICreateTask) => {
   try {
     // Obtenemos la lista de proyectos actuales
-    const tareasBd = await getTareasController();
-    const tareaNuevaAddedId: ITask = {
-      ...tareaNueva,
-      id: crypto.randomUUID(),
-      estado: "pendiente",
-    };
-
-    if (tareasBd) {
-      // Si existen tareas, agregamos el nuevo a la lista y actualizamos
-      await putBacklog([...tareasBd, tareaNuevaAddedId]);
-    } else {
-      // Si no existen tareas, creamos la lista con la nueva tarea
-      await putBacklog([tareaNuevaAddedId]);
-    }
-
-    return tareaNueva;
+    console.log(tareaNueva);
+    const response = await axios.post<ITask>(`${API_URL}/tasks`, tareaNueva);
+    const createdTask = response.data;
+    console.log(createdTask);
+    return createdTask;
   } catch (error) {
-    console.log("Error en createProyectoController", error);
+    const message = handleAxiosError(error);
+    console.error("Error al crear una tarea: ", message);
   }
 };
 
 export const updateTareaController = async (tareaActualizada: ITask) => {
   try {
     // Obtenemos la lista de proyectos actuales
-    const tareasBd = await getTareasController();
+    const updateTask = await axios.put<ITask>(
+      `${API_URL}/tasks/${tareaActualizada.id}`,
+      tareaActualizada
+    );
 
-    if (tareasBd) {
-      // Mapeamos los proyectos y reemplazamos el que coincida con el ID del actualizado
-      const result = tareasBd.map((tarea) =>
-        tarea.id === tareaActualizada.id
-          ? { ...tarea, ...tareaActualizada } // Actualizamos los datos del proyecto
-          : tarea
-      );
-
-      await putBacklog(result); // Guardamos la nueva lista de proyectos
-    }
-    return tareaActualizada; // Retornamos el proyecto actualizado
+    if (updateTask) {
+      return updateTask;
+    } else {
+      throw new Error("Error al actualizar una tarea");
+    } // Retornamos el proyecto actualizado
   } catch (error) {
-    console.log("Error en updateProyectoController", error);
+    const message = handleAxiosError(error);
+    console.error("Error al actulizar una tarea: ", message);
   }
 };
 
 // Función para eliminar una tarea por su ID
 export const deleteTareaController = async (idTarea: string) => {
   try {
-    // Obtenemos la lista de proyectos actuales
-    const tareasBd = await getTareasController();
-
-    if (tareasBd) {
-      // Filtramos la lista eliminando el proyecto con el ID dado
-      const result = tareasBd.filter((tarea) => tarea.id !== idTarea);
-
-      await putBacklog(result); // Guardamos la nueva lista sin el proyecto eliminado
-    }
+    const response = await axios.delete(`${API_URL}/tasks/${idTarea}`);
+    return response;
   } catch (error) {
-    console.log("Error en deleteProyectoController", error);
+    const message = handleAxiosError(error);
+    console.error("Error al eliminar una tarea: ", message);
   }
 };
-
+/*
 export const getTareasSprintController = async (idSprint: String) => {
   try {
     const sprintsBd = await getSprintsController();
@@ -154,6 +134,7 @@ export const deleteTareaSprintController = async (
   }
 };
 //No ha sido probado aun
+
 export const moverTareaASprintController = async (
   tarea: ITask,
   idSprint: string
@@ -199,4 +180,4 @@ export const moverTareaABacklogController = async (
       "Ocurrio un error en la funcion de mover la tarea del al backlog"
     );
   }
-};
+}*/

@@ -6,4 +6,5 @@ export interface ISprint {
   fechaCierre: string;
   nombre: string;
   tareas: ITask[];
+  color: string;
 }

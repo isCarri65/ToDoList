@@ -1,8 +1,9 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"; // Importar estilos de react-datepicker
 import styles from "./ModalSprint.module.css";
 import { sprintStore } from "../../../../store/sprintBackLogStore";
 import { useSprint } from "../../../../hooks/useSprint";
-import { v4 as uuidv4 } from "uuid";
 import { ICreateSprint } from "../../../../types/ICreateSprint";
 
 type IModal = {
@@ -28,11 +29,13 @@ export const ModalSprint: FC<IModal> = ({ handleCloseModal }) => {
 
   useEffect(() => {
     if (sprintModalActiva) {
-      setFormValues(sprintModalActiva);
-    } else {
-      setFormValues((prev) => ({ ...prev, id: uuidv4() }));
+      setFormValues({
+        fechaInicio: sprintModalActiva.fechaInicio,
+        fechaCierre: sprintModalActiva.fechaCierre,
+        nombre: sprintModalActiva.nombre,
+      });
     }
-  }, []);
+  }, [sprintModalActiva]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -42,19 +45,39 @@ export const ModalSprint: FC<IModal> = ({ handleCloseModal }) => {
     setFormValues((prev) => ({ ...prev, [`${name}`]: value }));
   };
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (sprintModalActiva) {
-      editSprint({
-        ...formValues,
-        id: sprintModalActiva.id,
-        tareas: sprintModalActiva.tareas,
-      });
-    } else {
-      createSprint(formValues);
+  const handleDateChange = (
+    date: Date | null,
+    field: "fechaInicio" | "fechaCierre"
+  ) => {
+    if (date) {
+      setFormValues((prev) => ({
+        ...prev,
+        [field]: date.toISOString().split("T")[0],
+      }));
     }
-    setSprintModalActiva(null);
-    handleCloseModal();
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    if (new Date(formValues.fechaInicio) >= new Date(formValues.fechaCierre)) {
+      alert("La fecha de cierre debe ser posterior a la fecha de inicio.");
+      return;
+    }
+
+    try {
+      if (sprintModalActiva) {
+        const sprint = { ...sprintModalActiva, ...formValues };
+        await editSprint(sprint);
+      } else {
+        await createSprint(formValues);
+      }
+      setSprintModalActiva(null);
+      handleCloseModal();
+    } catch (error) {
+      console.error("Error al guardar el sprint:", error);
+      alert("Ocurrió un error al guardar el sprint. Inténtalo de nuevo.");
+    }
   };
 
   return (
@@ -66,50 +89,63 @@ export const ModalSprint: FC<IModal> = ({ handleCloseModal }) => {
 
         <form onSubmit={handleSubmit} className={styles.formContent}>
           <div className={styles.InputContainer}>
-            <input
-              className={styles.input}
-              placeholder="Ingrese un título"
-              type="text"
-              required
-              onChange={handleChange}
-              value={formValues.nombre}
-              autoComplete="off"
-              name="nombre"
-            />
+            <div className={styles.inputTitleContainer}>
+              <label htmlFor="nombre">Titulo: </label>
+              <input
+                className={styles.input}
+                placeholder="Ingrese un título"
+                type="text"
+                required
+                onChange={handleChange}
+                value={formValues.nombre}
+                autoComplete="off"
+                name="nombre"
+                aria-label="Título del sprint"
+              />
+            </div>
+            <div>
+              <label htmlFor="fechaInicio">Fecha de Inicio:</label>
+              <DatePicker
+                selected={
+                  formValues.fechaInicio
+                    ? new Date(formValues.fechaInicio)
+                    : null
+                }
+                onChange={(date) => handleDateChange(date, "fechaInicio")}
+                dateFormat="yyyy-MM-dd"
+                className={styles.input}
+                placeholderText="Seleccione una fecha"
+                aria-label="Fecha de inicio del sprint"
+              />
+            </div>
 
-            <input
-              className={styles.input + " " + styles.inputDate}
-              type="date"
-              required
-              onChange={handleChange}
-              value={formValues.fechaInicio}
-              autoComplete="off"
-              name="fechaInicio"
-            />
-
-            <input
-              className={styles.input + " " + styles.inputDate}
-              type="date"
-              required
-              onChange={handleChange}
-              value={formValues.fechaCierre}
-              autoComplete="off"
-              name="fechaCierre"
-            />
+            <div>
+              <label htmlFor="fechaCierre">Fecha de Cierre:</label>
+              <DatePicker
+                selected={
+                  formValues.fechaCierre
+                    ? new Date(formValues.fechaCierre)
+                    : null
+                }
+                onChange={(date) => handleDateChange(date, "fechaCierre")}
+                dateFormat="yyyy-MM-dd"
+                className={styles.input}
+                placeholderText="Seleccione una fecha"
+                aria-label="Fecha de cierre del sprint"
+              />
+            </div>
           </div>
 
           <div className={styles.buttonCard}>
             <button
-              style={{ background: "#f00" }}
-              className={styles.buttonModalTask}
+              className={`${styles.buttonModalTask} ${styles.buttonCancel}`}
               onClick={handleCloseModal}
             >
               Cancelar
             </button>
 
             <button
-              style={{ background: "#00B300" }}
-              className={styles.buttonModalTask}
+              className={`${styles.buttonModalTask} ${styles.buttonSubmit}`}
               type="submit"
             >
               {sprintModalActiva ? "Guardar" : "Crear sprint"}

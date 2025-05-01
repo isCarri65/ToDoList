@@ -33,7 +33,7 @@ export const CardTask: FC<ICardList> = ({ tarea, handleOpenModal }) => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const id = event.target.value;
     console.log(id);
-    moveTaskToSprint(tarea, id);
+    moveTaskToSprint(tarea.id, id);
   };
   const handleChangeArrow = () => {
     setArrowDirection(!arrowDirection);

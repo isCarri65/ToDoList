@@ -45,20 +45,21 @@ export const ListTasks = () => {
           <FontAwesomeIcon icon={faThList} /> Agregar tarea
         </button>
       </div>
-
-      {tareas.length > 0 ? (
-        tareas.map((el, index) => (
-          <CardTask
-            key={index}
-            handleOpenModal={handleOpenModal}
-            tarea={el}
-          ></CardTask>
-        ))
-      ) : (
-        <div>
-          <h3>No hay tareas</h3>
-        </div>
-      )}
+      <div className={styles.tasksContainer}>
+        {tareas.length > 0 ? (
+          tareas.map((el, index) => (
+            <CardTask
+              key={index}
+              handleOpenModal={handleOpenModal}
+              tarea={el}
+            ></CardTask>
+          ))
+        ) : (
+          <div>
+            <h3>No hay tareas</h3>
+          </div>
+        )}
+      </div>
       {openModalTarea && (
         <ModalTask handleCloseModal={handleCloseModal}></ModalTask>
       )}

@@ -11,7 +11,8 @@ import { sprintStore } from "../store/sprintBackLogStore";
 import { ISprint } from "../types/ISprint";
 import { ICreateSprint } from "../types/ICreateSprint";
 import { ITask } from "../types/ITask";
-import { updateTareaSprintController } from "../data/tareaController";
+import { updateTareaController } from "../data/tareaController";
+import { handleAxiosError } from "../utils/handleAxiosError";
 
 export const useSprint = () => {
   const {
@@ -33,13 +34,27 @@ export const useSprint = () => {
   );
 
   const getSprints = async () => {
-    const data = await getSprintsController();
-    if (data) setArraysprints(data);
+    try {
+      const data = await getSprintsController();
+      if (!data) {
+        setArraysprints([]);
+      } else {
+        setArraysprints(data);
+      }
+    } catch (error) {
+      const message = handleAxiosError(error);
+      console.error("Error al obtener sprints: ", message);
+    }
   };
 
   const getSprintById = async (id: string) => {
-    const sprint = await getSprintByIdController(id);
-    return sprint;
+    try {
+      const sprint = await getSprintByIdController(id);
+      return sprint;
+    } catch (error) {
+      const message = handleAxiosError(error);
+      console.error("Error al obtener sprint por id: ", message);
+    }
   };
 
   const createSprint = async (newSprint: ICreateSprint) => {
@@ -67,11 +82,14 @@ export const useSprint = () => {
 
   const editTaskSprint = async (taskEdited: ITask, idSprint: string) => {
     try {
-      await updateTareaSprintController(taskEdited, idSprint);
+      await updateTareaController(taskEdited);
       const updatedSprint = await getSprintByIdController(idSprint);
-      setSprintActiva(updatedSprint);
+      if (updatedSprint) setSprintActiva(updatedSprint);
     } catch (error) {
-      console.log("Error al editar una tarea y traer el sprint actulizado");
+      console.error(
+        "Error al editar una tarea y traer el sprint actulizado ",
+        error
+      );
     }
   };
 
@@ -94,7 +112,7 @@ export const useSprint = () => {
       Swal.fire("Eliminado", "La sprint se eliminó correctamente", "success");
     } catch (error) {
       if (estadoPrevio) agregarNuevasprint(estadoPrevio);
-      console.log("Algo salió mal al editar");
+      console.error("Error al eliminar una sprint ", error);
     }
   };
 
